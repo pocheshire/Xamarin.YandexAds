@@ -44,8 +44,8 @@
   <ItemGroup>
     <NativeReference Include="..\..\lib\iOS\YandexMobileMetrica.framework">
       <Kind>Framework</Kind>
-      <ForceLoad>True</ForceLoad>
-      <Frameworks>Foundation; CoreLocation</Frameworks>
+      <Frameworks>Foundation CoreLocation</Frameworks>
+      <LinkerFlags>-all_load -ObjC</LinkerFlags>
     </NativeReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.ObjCBinding.CSharp.targets" />

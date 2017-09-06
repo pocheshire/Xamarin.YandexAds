@@ -43,13 +43,9 @@
   <ItemGroup>
     <NativeReference Include="..\..\lib\iOS\YandexMobileAds.framework">
       <Kind>Framework</Kind>
-      <ForceLoad>True</ForceLoad>
-      <Frameworks>UIKit; Foundation; CoreLocation; CoreGraphics; YandexMobileMetrica</Frameworks>
-    </NativeReference>
-    <NativeReference Include="..\..\lib\iOS\YandexMobileMetrica.framework">
-      <Kind>Framework</Kind>
-      <ForceLoad>True</ForceLoad>
-      <Frameworks>Foundation; CoreLocation</Frameworks>
+      <Frameworks>UIKit Foundation CoreLocation CoreGraphics</Frameworks>
+      <LinkerFlags>-ObjC -all_load </LinkerFlags>
+      <WeakFrameworks></WeakFrameworks>
     </NativeReference>
   </ItemGroup>
   <ItemGroup>
