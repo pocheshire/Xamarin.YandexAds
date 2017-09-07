@@ -2,7 +2,6 @@
 
 namespace Xamarin.YandexAds.iOS
 {
-    
     public enum YMAAdErrorCode : uint
     {
         EmptyBlockID,

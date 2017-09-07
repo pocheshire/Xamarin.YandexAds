@@ -351,15 +351,15 @@ namespace Xamarin.YandexAds.iOS
     {
         // @optional -(void)nativeAdLoader:(YMANativeAdLoader * _Null_unspecified)loader didLoadContentAd:(id<YMANativeContentAd> _Nonnull)ad;
         [Export("nativeAdLoader:didLoadContentAd:")]
-        void DidLoadContentAd(YMANativeAdLoader loader, YMANativeContentAd ad);
+        void DidLoadContentAd(YMANativeAdLoader loader, IYMANativeContentAd ad);
 
         // @optional -(void)nativeAdLoader:(YMANativeAdLoader * _Null_unspecified)loader didLoadAppInstallAd:(id<YMANativeAppInstallAd> _Nonnull)ad;
         [Export("nativeAdLoader:didLoadAppInstallAd:")]
-        void DidLoadAppInstallAd(YMANativeAdLoader loader, YMANativeAppInstallAd ad);
+        void DidLoadAppInstallAd(YMANativeAdLoader loader, IYMANativeAppInstallAd ad);
 
         // @optional -(void)nativeAdLoader:(YMANativeAdLoader * _Null_unspecified)loader didLoadImageAd:(id<YMANativeImageAd> _Nonnull)ad;
         [Export("nativeAdLoader:didLoadImageAd:")]
-        void DidLoadImageAd(YMANativeAdLoader loader, YMANativeImageAd ad);
+        void DidLoadImageAd(YMANativeAdLoader loader, IYMANativeImageAd ad);
 
         // @optional -(void)nativeAdLoader:(YMANativeAdLoader * _Null_unspecified)loader didFailLoadingWithError:(NSError * _Nonnull)error;
         [Export("nativeAdLoader:didFailLoadingWithError:")]
@@ -396,23 +396,27 @@ namespace Xamarin.YandexAds.iOS
         // @required -(void)nativeAdDidFinishLoadingImages:(id<YMANativeGenericAd> _Nonnull)ad;
         [Abstract]
         [Export("nativeAdDidFinishLoadingImages:")]
-        void NativeAdDidFinishLoadingImages(YMANativeGenericAd ad);
+        void NativeAdDidFinishLoadingImages(IYMANativeGenericAd ad);
     }
 
+    interface IYMANativeGenericAd { }
+    interface IYMANativeContentAd { }
+    interface IYMANativeAppInstallAd { }
+    interface IYMANativeImageAd { }
+
     // @protocol YMANativeGenericAd <NSObject>
-    [Abstract]
+    [Protocol, Model]
     [BaseType(typeof(NSObject))]
-    [Model]
     interface YMANativeGenericAd
     {
-        [Wrap("WeakDelegate")/*, Abstract*/]
+        [Wrap("WeakDelegate")]
         [NullAllowed]
         YMANativeAdDelegate Delegate { get; set; }
 
         // @required @property (nonatomic, weak) id<YMANativeAdDelegate> _Nullable delegate;
-        [Abstract]
         [NullAllowed, Export("delegate", ArgumentSemantic.Weak)]
-        NSObject WeakDelegate { get; set; }
+        [Abstract]
+        NSObject WeakDelegate { [Override] get; [Override] set; }
 
         // @required -(void)addImageLoadingObserver:(id<YMANativeAdImageLoadingObserver> _Nonnull)observer;
         [Abstract]
@@ -425,19 +429,19 @@ namespace Xamarin.YandexAds.iOS
         void RemoveImageLoadingObserver(YMANativeAdImageLoadingObserver observer);
 
         // @required -(NSString * _Nonnull)adType;
-        [Abstract]
         [Export("adType")]
-        string AdType { get; }
+        [Abstract]
+        string AdType { get; [NotImplemented] set; }
 
         // @required -(YMANativeAdAssets * _Nonnull)adAssets;
-        [Abstract]
         [Export("adAssets")]
-        YMANativeAdAssets AdAssets { get; }
+        [Abstract]
+        YMANativeAdAssets AdAssets { get; [NotImplemented] set; }
 
         // @required @property (readonly, copy, nonatomic) NSString * _Nonnull info;
-        [Abstract]
         [Export("info")]
-        string Info { get; }
+        [Abstract]
+        string Info { get; [NotImplemented] set; }
 
         // @required -(void)loadImages;
         [Abstract]
@@ -446,8 +450,8 @@ namespace Xamarin.YandexAds.iOS
     }
 
     // @protocol YMANativeContentAd <YMANativeGenericAd>
+    [Protocol, Model]
     [BaseType(typeof(YMANativeGenericAd))]
-    [Model]
     interface YMANativeContentAd
     {
         // @required -(BOOL)bindContentAdToView:(YMANativeContentAdView * _Nonnull)view delegate:(id<YMANativeAdDelegate> _Nullable)delegate error:(NSError * _Nullable * _Nullable)error;
@@ -457,8 +461,8 @@ namespace Xamarin.YandexAds.iOS
     }
 
     // @protocol YMANativeAppInstallAd <YMANativeGenericAd>
+    [Protocol, Model]
     [BaseType(typeof(YMANativeGenericAd))]
-    [Model]
     interface YMANativeAppInstallAd
     {
         // @required -(BOOL)bindAppInstallAdToView:(YMANativeAppInstallAdView * _Nonnull)view delegate:(id<YMANativeAdDelegate> _Nullable)delegate error:(NSError * _Nullable * _Nullable)error;
@@ -468,8 +472,8 @@ namespace Xamarin.YandexAds.iOS
     }
 
     // @protocol YMANativeImageAd <YMANativeGenericAd>
+    [Protocol, Model]
     [BaseType(typeof(YMANativeGenericAd))]
-    [Model]
     interface YMANativeImageAd
     {
         // @required -(BOOL)bindImageAdToView:(YMANativeImageAdView * _Nonnull)view delegate:(id<YMANativeAdDelegate> _Nullable)delegate error:(NSError * _Nullable * _Nullable)error;
@@ -520,7 +524,7 @@ namespace Xamarin.YandexAds.iOS
 
         // @property (readonly, nonatomic, strong) id<YMANativeContentAd> _Nullable ad;
         [NullAllowed, Export("ad", ArgumentSemantic.Strong)]
-        YMANativeContentAd Ad { get; }
+        IYMANativeContentAd Ad { get; }
     }
 
     // @interface YMANativeAppInstallAdView : UIView
@@ -577,7 +581,7 @@ namespace Xamarin.YandexAds.iOS
 
         // @property (readonly, nonatomic, strong) id<YMANativeAppInstallAd> _Nullable ad;
         [NullAllowed, Export("ad", ArgumentSemantic.Strong)]
-        YMANativeAppInstallAd Ad { get; }
+        IYMANativeAppInstallAd Ad { get; }
     }
 
     // @interface YMANativeImageAdView : UIView
@@ -590,7 +594,7 @@ namespace Xamarin.YandexAds.iOS
 
         // @property (readonly, nonatomic, strong) id<YMANativeImageAd> _Nullable ad;
         [NullAllowed, Export("ad", ArgumentSemantic.Strong)]
-        YMANativeImageAd Ad { get; }
+        IYMANativeImageAd Ad { get; }
     }
 
     // @protocol YMARating <NSObject>
@@ -631,7 +635,7 @@ namespace Xamarin.YandexAds.iOS
     {
         // @property (nonatomic, strong) id<YMANativeGenericAd> _Nullable ad;
         [NullAllowed, Export("ad", ArgumentSemantic.Strong)]
-        YMANativeGenericAd Ad { get; set; }
+        IYMANativeGenericAd Ad { get; set; }
 
         // -(void)applyAppearance:(YMANativeTemplateAppearance * _Nonnull)appearance;
         [Export("applyAppearance:")]
@@ -640,7 +644,7 @@ namespace Xamarin.YandexAds.iOS
         // +(CGFloat)heightWithAd:(id<YMANativeGenericAd> _Nonnull)ad width:(CGFloat)width appearance:(YMANativeTemplateAppearance * _Nullable)appearance;
         [Static]
         [Export("heightWithAd:width:appearance:")]
-        nfloat HeightWithAd(YMANativeGenericAd ad, nfloat width, [NullAllowed] YMANativeTemplateAppearance appearance);
+        nfloat HeightWithAd(IYMANativeGenericAd ad, nfloat width, [NullAllowed] YMANativeTemplateAppearance appearance);
     }
 
     // @interface YMANativeTemplateAppearance : NSObject <NSCopying, NSMutableCopying>
