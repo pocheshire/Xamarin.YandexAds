@@ -1128,6 +1128,19 @@ namespace Xamarin.YandexAds.iOS
         NSString YMAVASTSpecialResponseTextKey { get; }
     }
 
+    [BaseType(typeof(NSObject))]
+    interface YMAXMLDictionaryParsingUtils
+    {
+        //+[YMAXMLDictionaryParsingUtils extractItems:xmlDictionary:]
+
+        //+[YMAXMLDictionaryParsingUtils parseXMLTimeToSeconds:]
+
+        //+[YMAXMLDictionaryParsingUtils isValidXML:]
+        [Static]
+        [Export("isValidXML:")]
+        bool IsValidXML(NSObject[] xml);
+    }
+
     // @interface YMAYandexVASTAds : NSObject
     [BaseType(typeof(NSObject))]
     interface YMAYandexVASTAds

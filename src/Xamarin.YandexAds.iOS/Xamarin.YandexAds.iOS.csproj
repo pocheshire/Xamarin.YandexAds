@@ -43,9 +43,10 @@
   <ItemGroup>
     <NativeReference Include="..\..\lib\iOS\YandexMobileAds.framework">
       <Kind>Framework</Kind>
-      <Frameworks>UIKit Foundation CoreLocation CoreGraphics</Frameworks>
-      <LinkerFlags>-ObjC -all_load </LinkerFlags>
-      <WeakFrameworks></WeakFrameworks>
+      <Frameworks>SystemConfiguration Security UIKit Foundation CoreTelephony CoreLocation CoreGraphics AdSupport</Frameworks>
+      <LinkerFlags>-ObjC -lz -lc++ -lsqlite3 -lxml2</LinkerFlags>
+      <WeakFrameworks>SafariServices</WeakFrameworks>
+      <ForceLoad>True</ForceLoad>
     </NativeReference>
   </ItemGroup>
   <ItemGroup>
