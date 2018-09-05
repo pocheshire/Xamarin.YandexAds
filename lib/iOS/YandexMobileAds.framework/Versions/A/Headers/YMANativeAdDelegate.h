@@ -1,12 +1,8 @@
 /*
- *  YMANativeAdDelegate.h
- *
- * This file is a part of the Yandex Advertising Network.
- *
- * Version for iOS © 2017 YANDEX
+ * Version for iOS © 2015–2018 YANDEX
  *
  * You may not use this file except in compliance with the License.
- * You may obtain a copy of the License at https://legal.yandex.com/partner_ch/
+ * You may obtain a copy of the License at https://yandex.com/legal/mobileads_sdk_agreement/
  */
 
 #import <UIKit/UIKit.h>
@@ -43,7 +39,7 @@ NS_ASSUME_NONNULL_BEGIN
  * @param ad Ad sending the message.
  * @param viewController View controller, which is being presented.
  */
-- (void)nativeAd:(null_unspecified id)ad willPresentScreen:(UIViewController *)viewController;
+- (void)nativeAd:(null_unspecified id)ad willPresentScreen:(nullable UIViewController *)viewController;
 
 /**
  * Notifies delegate just after fullscreen view has been dismissed.
@@ -52,7 +48,14 @@ NS_ASSUME_NONNULL_BEGIN
  * @param ad Ad sending the message.
  * @param viewController View controller, which is being dismissed.
  */
-- (void)nativeAd:(null_unspecified id)ad didDismissScreen:(UIViewController *)viewController;
+- (void)nativeAd:(null_unspecified id)ad didDismissScreen:(nullable UIViewController *)viewController;
+
+/**
+ * Notifies delegate when ad should be closed as a result of user interaction.
+ *
+ * @param ad Ad sending the message.
+ */
+- (void)closeNativeAd:(null_unspecified id)ad;
 
 @end
 

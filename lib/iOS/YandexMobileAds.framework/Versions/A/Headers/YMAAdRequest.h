@@ -1,12 +1,8 @@
 /*
- *  YMAAdRequest.h
- *
- * This file is a part of the Yandex Advertising Network.
- *
- * Version for iOS © 2017 YANDEX
+ * Version for iOS © 2015–2018 YANDEX
  *
  * You may not use this file except in compliance with the License.
- * You may obtain a copy of the License at https://legal.yandex.com/partner_ch/
+ * You may obtain a copy of the License at https://yandex.com/legal/mobileads_sdk_agreement/
  */
 
 #import <Foundation/Foundation.h>
@@ -17,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  * Ad request contains data for ad targeting.
  */
-@interface YMAAdRequest : NSObject
+@interface YMAAdRequest : NSObject <NSCopying, NSMutableCopying>
 
 /**
  * Current location.
@@ -35,11 +31,20 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, readonly, nullable) NSArray *contextTags;
 
 /**
+ * User's gender.
+ * @see YMAGender.h for possible values.
+ */
+@property (nonatomic, copy, readonly, nullable) NSString *gender;
+
+/**
+ * User's age.
+ */
+@property (nonatomic, strong, readonly, nullable) NSNumber *age;
+
+/**
  * Custom parameters containing NSString keys and values.
  */
 @property (nonatomic, copy, readonly, nullable) NSDictionary *parameters;
-
-- (instancetype)init __attribute__((unavailable("Use designated initializer")));
 
 /**
  * Returns ad request containing user location, query input and context tags.
@@ -66,6 +71,44 @@ NS_ASSUME_NONNULL_BEGIN
                     contextQuery:(nullable NSString *)contextQuery
                      contextTags:(nullable NSArray *)contextTags
                       parameters:(nullable NSDictionary *)parameters NS_DESIGNATED_INITIALIZER;
+
+@end
+
+/**
+ * YMAMutableAdRequest is mutable version of YMAAdRequest, which allows to modify request parameters.
+ */
+@interface YMAMutableAdRequest : YMAAdRequest
+
+/**
+ * Current location.
+ */
+@property (nonatomic, copy, nullable) CLLocation *location;
+
+/**
+ * Query input from user.
+ */
+@property (nonatomic, copy, nullable) NSString *contextQuery;
+
+/**
+ * Array of tag strings describing current user context.
+ */
+@property (nonatomic, copy, nullable) NSArray *contextTags;
+
+/**
+ * User's gender.
+ * @see YMAGender.h for possible values.
+ */
+@property (nonatomic, copy, nullable) NSString *gender;
+
+/**
+ * User's age.
+ */
+@property (nonatomic, strong, nullable) NSNumber *age;
+
+/**
+ * Custom parameters containing NSString keys and values.
+ */
+@property (nonatomic, copy, nullable) NSDictionary *parameters;
 
 @end
 

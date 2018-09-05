@@ -1,15 +1,12 @@
 /*
- *  YMAMobileAds.h
- *
- * This file is a part of the Yandex Advertising Network.
- *
- * Version for iOS © 2017 YANDEX
+ * Version for iOS © 2015–2018 YANDEX
  *
  * You may not use this file except in compliance with the License.
- * You may obtain a copy of the License at https://legal.yandex.com/partner_ch/
+ * You may obtain a copy of the License at https://yandex.com/legal/mobileads_sdk_agreement/
  */
 
 #import <Foundation/Foundation.h>
+#import <YandexMobileAds/YMADeviceTypes.h>
 
 @interface YMAMobileAds : NSObject
 
@@ -30,9 +27,17 @@
  SDK does not prompt user to allow location tracking.
  Location which is passed in YMAAdRequest overrides location which is collected automatically.
  Automatic location tracking is enabled by default.
-
+ 
  @param enabled NO to disable automatic location tracking; otherwise location is tracked automatically.
  */
 + (void)setLocationTrackingEnabled:(BOOL)enabled;
+
+/** Enable/disable ad visibility validation error indicator.
+ Indicator is enabled for simulator by default. Pass YMADeviceTypeNone to disable indicator for all devices.
+ Indicator is not displayed in apps installed from AppStore regardless of passed device type.
+ 
+ @param deviceType Device type for showing ad visibility validation error indicator.
+ */
++ (void)enableVisibilityErrorIndicatorForDeviceType:(YMADeviceType)deviceType;
 
 @end
