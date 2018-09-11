@@ -1,12 +1,8 @@
 /*
- *  YMANativeImageAdView.h
- *
- * This file is a part of the Yandex Advertising Network.
- *
- * Version for iOS © 2017 YANDEX
+ * Version for iOS © 2015–2018 YANDEX
  *
  * You may not use this file except in compliance with the License.
- * You may obtain a copy of the License at https://legal.yandex.com/partner_ch/
+ * You may obtain a copy of the License at https://yandex.com/legal/mobileads_sdk_agreement/
  */
 
 #import <UIKit/UIKit.h>
@@ -21,6 +17,11 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface YMANativeImageAdView : UIView
+
+/**
+ * Button for user feedback.
+ */
+@property (nonatomic, weak, nullable) IBOutlet UIButton *feedbackButton;
 
 /**
  * ImageView for ad image.

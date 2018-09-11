@@ -1,8 +1,71 @@
 ﻿using System;
+using System.Runtime.InteropServices;
+using ObjCRuntime;
 
 namespace Xamarin.YandexAds.iOS
 {
-    public enum YMAAdErrorCode : uint
+    [Native]
+    public enum YMAIconResourceType : ulong
+    {
+        Unknown,
+        Static,
+        IFrame,
+        Html
+    }
+
+    [Native]
+    public enum YMAIconHorizontalPosition : ulong
+    {
+        Left,
+        Right,
+        LeftOffset
+    }
+
+    [Native]
+    public enum YMAIconVerticalPosition : ulong
+    {
+        Top,
+        Bottom,
+        TopOffset
+    }
+
+    [Native]
+    public enum YMADeviceType : ulong
+    {
+        None = 0,
+        Hardware = 1 << 0,
+        Simulator = 1 << 1
+    }
+
+    [Native]
+    public enum YMADeliveryMethod : ulong
+    {
+        Unknown,
+        Streaming,
+        Progressive
+    }
+
+    [Native]
+    public enum YMABlockType : ulong
+    {
+        Unknown,
+        Preroll,
+        Midroll,
+        Postroll,
+        Pauseroll,
+        Overlayroll
+    }
+
+    [Native]
+    public enum YMAVASTAdType : ulong
+    {
+        Unknown,
+        InLine,
+        Wrapper
+    }
+
+    [Native]
+    public enum YMAAdErrorCode : ulong
     {
         EmptyBlockID,
         InvalidBannerSize,
@@ -18,8 +81,16 @@ namespace Xamarin.YandexAds.iOS
         MetricaNotStarted
     }
 
-    
-    public enum YMANativeErrorCode : uint
+    [Native]
+    public enum YMAVASTErrorCode : ulong
+    {
+        NoAdsInVASTResponse,
+        InvalidXMLResponse,
+        CannotBuildRequest
+    }
+
+    [Native]
+    public enum YMANativeErrorCode : ulong
     {
         NoViewForAsset,
         InvalidViewForBinding,
@@ -27,7 +98,7 @@ namespace Xamarin.YandexAds.iOS
         AdTypeMismatch
     }
 
-    //[StructLayout (LayoutKind.Sequential)]
+    [StructLayout (LayoutKind.Sequential)]
     public struct YMAHorizontalOffset
     {
         public nfloat left;
@@ -35,71 +106,11 @@ namespace Xamarin.YandexAds.iOS
         public nfloat right;
     }
 
-    
-    public enum YMASizeConstraintType : int
+    [Native]
+    public enum YMASizeConstraintType : long
     {
         Fixed,
         FixedBannerRatio,
         PreferredBannerRatio
-    }
-
-    
-    public enum YMABlockType : uint
-    {
-        Unknown,
-        Preroll,
-        Midroll,
-        Postroll,
-        Pauseroll,
-        Overlayroll
-    }
-
-    
-    public enum YMAVASTAdType : uint
-    {
-        Unknown,
-        InLine,
-        Wrapper
-    }
-
-    
-    public enum YMADeliveryMethod : uint
-    {
-        Unknown,
-        Streaming,
-        Progressive
-    }
-
-    
-    public enum YMAVASTErrorCode : uint
-    {
-        NoAdsInVASTResponse,
-        InvalidXMLResponse,
-        CannotBuildRequest
-    }
-
-    
-    public enum YMAIconResourceType : uint
-    {
-        Unknown,
-        Static,
-        IFrame,
-        Html
-    }
-
-    
-    public enum YMAIconHorizontalPosition : uint
-    {
-        Left,
-        Right,
-        LeftOffset
-    }
-
-    
-    public enum YMAIconVerticalPosition : uint
-    {
-        Top,
-        Bottom,
-        TopOffset
     }
 }
