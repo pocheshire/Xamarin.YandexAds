@@ -1,5 +1,5 @@
 /*
- * Version for iOS © 2015–2018 YANDEX
+ * Version for iOS © 2015–2019 YANDEX
  *
  * You may not use this file except in compliance with the License.
  * You may obtain a copy of the License at https://yandex.com/legal/mobileads_sdk_agreement/
@@ -17,92 +17,85 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /**
- * YMANativeAdLoader loads native ad for specific block ID.
+ This class is responsible for loading native ads.
  */
 @interface YMANativeAdLoader : NSObject
 
 /**
- * Unique ad placement ID created at partner interface.
- * Identifies ad placement for specific application.
- * Format: R-M-XXXXXX-Y
+ The Block ID is a unique identifier in the R-M-XXXXXX-Y format, which is assigned in the Partner interface.
  */
 @property (nonatomic, strong, readonly) NSString *blockID;
 
 /**
- * Loader configuration.
+ Configuration for loading native ads.
  */
 @property (nonatomic, strong, readonly) YMANativeAdLoaderConfiguration *configuration;
 
 /**
- * Delegates of YMANativeAdLoader receive ads or errors if loading fails.
+ Monitors the process of loading native ads.
  */
 @property (nonatomic, weak, nullable) id<YMANativeAdLoaderDelegate> delegate;
 
 - (instancetype)init __attribute__((unavailable("Use initWithConfiguration: instead")));
 
 /**
- * Returns native ad loader with specific block ID.
- *
- * @param blockID Unique ad placement ID created at partner interface (partner.yandex.ru).
- *
- * @return Native ad loader initialized with corresponding block ID.
+ Initializes a new object of the YMANativeAdLoader class.
+ @note This method is deprecated. Use the [YMANativeAdLoader initWithConfiguration:] method.
+ @param blockID The Block ID is a unique identifier in the R-M-XXXXXX-Y format,
+ which is assigned in the Partner interface.
+ @return An object of the YMANativeAdLoader class.
  */
 - (instancetype)initWithBlockID:(NSString *)blockID __attribute__((deprecated("Use initWithConfiguration: instead")));
 
 /**
- * Returns native ad loader with specific configuration.
- *
- * @param configuration Loader configuration.
- *
- * @return Native ad loader initialized with corresponding configuration.
+ Initializes a new object of the YMANativeAdLoader class.
+ @param configuration Configuration for loading native ads.
+ @return An object of the YMANativeAdLoader class.
  */
 - (instancetype)initWithConfiguration:(YMANativeAdLoaderConfiguration *)configuration;
 
 /**
- * Loads ad.
- * @param request Request containing ad targeting.
+ Loads an ad with the specified targeting data.
+ @param request Data for targeting.
  */
 - (void)loadAdWithRequest:(nullable YMAAdRequest *)request;
 
 @end
 
+/**
+ The protocol defines the methods of a delegate that monitors the ad loading process.
+ @discussion The methods are invoked by an object of the YMANativeAdLoader class.
+ */
 @protocol YMANativeAdLoaderDelegate <NSObject>
 
 @optional
 
 /**
- * Notifies delegate when content ad is loaded.
- *
- * @param loader Loader sending the message.
- * @param ad Native ad of content type, which is ready to be bound to view.
+ Notifies that a `Content` ad is loaded.
+ @param loader The loader that sends the message.
+ @param ad Notifies that a `Content` ad is loaded and ready to be displayed.
  */
 - (void)nativeAdLoader:(null_unspecified YMANativeAdLoader *)loader didLoadContentAd:(id<YMANativeContentAd>)ad;
 
 /**
- * Notifies delegate when app install ad is loaded.
- *
- * @param loader Loader sending the message.
- * @param ad Native ad of app install type, which is ready to be bound to view.
+ Notifies that an `AppInstall` ad was loaded.
+ @param loader The loader that sends the message.
+ @param ad `AppInstall` native ad, ready for display.
  */
 - (void)nativeAdLoader:(null_unspecified YMANativeAdLoader *)loader didLoadAppInstallAd:(id<YMANativeAppInstallAd>)ad;
 
 /**
- * Notifies delegate when image ad is loaded.
- *
- * @param loader Loader sending the message.
- * @param ad Native ad of image type, which is ready to be bound to view.
- *
- * @discussion Typically, applications do not receive image ads until this option is explicitly configured.
- * Implementation of this method can be ignored if image ads are not configured in partner interface.
- * Image ads should be handled to support media formats, e.g. AdFox native media ads.
+ Notifies that an `ImageAd` ad was loaded.
+ @note The method is used only for working with ads with the `ImageAd` type.
+ @param loader The loader that sends the message.
+ @param ad `ImageAd` native ad, ready for display.
  */
 - (void)nativeAdLoader:(null_unspecified YMANativeAdLoader *)loader didLoadImageAd:(id<YMANativeImageAd>)ad;
 
 /**
- * Notifies delegate when loader fails to load ad.
- *
- * @param loader Loader sending the message.
- * @param error Error which occured while loading ad. @see YMANativeAdErrors for error codes.
+ Notifies that the ad failed to load.
+ @param loader The loader that sends the message.
+ @param error Information about the error (for details, see YMAAdErrorCode).
  */
 - (void)nativeAdLoader:(null_unspecified YMANativeAdLoader *)loader didFailLoadingWithError:(NSError *)error;
 

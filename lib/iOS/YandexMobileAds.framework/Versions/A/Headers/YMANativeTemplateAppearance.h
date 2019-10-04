@@ -1,5 +1,5 @@
 /*
- * Version for iOS © 2015–2018 YANDEX
+ * Version for iOS © 2015–2019 YANDEX
  *
  * You may not use this file except in compliance with the License.
  * You may obtain a copy of the License at https://yandex.com/legal/mobileads_sdk_agreement/
@@ -19,191 +19,196 @@ typedef struct YMAHorizontalOffset {
 } YMAHorizontalOffset;
 
 /**
- * YMANativeTemplateAppearance provides interfaces for native templates customization.
- * Use YMAMutableNativeTemplateAppearance to change appearance values, e.g. @p [appearance mutableCopy].
+ Class with the default (fixed) settings for the standard ad layout.
+ If you want to edit the default settings of the standard appearance,
+ use the YMAMutableNativeTemplateAppearance class.
  */
 @interface YMANativeTemplateAppearance : NSObject <NSCopying, NSMutableCopying>
 
 /**
- * Banner border width.
+ Width of the border.
  */
 @property (nonatomic, assign, readonly) CGFloat borderWidth;
 
 /**
- * Banner border color.
+ Color of the border.
  */
 @property (nonatomic, strong, readonly) UIColor *borderColor;
 
 /**
- * Banner background color.
+ Background color.
  */
 @property (nonatomic, strong, readonly) UIColor *backgroundColor;
 
 /**
- * Horizontal space between banner edge and content.
+ Horizontal (left and right) margins between the content and the edges of the ad.
+ @discussion Measured in logical pixels.
  */
 @property (nonatomic, assign, readonly) YMAHorizontalOffset contentPadding;
 
 /**
- * Horizontal image margins: left margin determines image offset from left content padding, 
- * right margin determines offset between image and text block.
- *
- * @warning Image margins are ignored for big images which are located below text block
- * and stretched to match banner width.
+ The horizontal margins around the image, relative to the ad content.
+ @discussion The left margin is relative to the left edge of the content.
+ The right margin is the gap between the right edge of the image and the left edge of the text.
+ @warning It doesn't apply to large images that are placed under the main ad text
+ and cover the entire width of the ad.
  */
 @property (nonatomic, assign, readonly) YMAHorizontalOffset imageMargins;
 
 /**
- * Age label appearance.
+ Appearance settings for the text with age restrictions.
  */
 @property (nonatomic, copy, readonly, nullable) YMALabelAppearance *ageAppearance;
 
 /**
- * Body label appearance.
+ Appearance settings for the main ad text.
  */
 @property (nonatomic, copy, readonly, nullable) YMALabelAppearance *bodyAppearance;
 
 /**
- * Call to action button appearance.
+ Appearance settings for a call-to-action button (for example, the Install button).
  */
 @property (nonatomic, copy, readonly, nullable) YMAButtonAppearance *callToActionAppearance;
 
 /**
- * Domain label appearance.
+ Appearance settings for the domain text.
  */
 @property (nonatomic, copy, readonly, nullable) YMALabelAppearance *domainAppearance;
 
 /**
- * Favicon image appearance.
+ Appearance settings for the favicon.
  */
 @property (nonatomic, copy, readonly, nullable) YMAImageAppearance *faviconAppearance;
 
 /**
- * Image appearance.
- *
- * @warning Image appearance is ignored for big images which are located below text block 
- * and stretched to match banner width.
+ Appearance settings for the image.
+ @warning It doesn't apply to large images that are placed under the main ad text
+ and cover the entire width of the ad.
  */
 @property (nonatomic, copy, readonly, nullable) YMAImageAppearance *imageAppearance;
 
 /**
- * Star rating appearance.
+ Appearance settings for the rating.
  */
 @property (nonatomic, copy, readonly, nullable) YMARatingAppearance *ratingAppearance;
 
 /**
- * Sponsored label appearance.
+ Appearance settings for the ad network text.
  */
 @property (nonatomic, copy, readonly, nullable) YMALabelAppearance *sponsoredAppearance;
 
 /**
- * Title label appearance.
+ Appearance settings for the ad title text.
  */
 @property (nonatomic, copy, readonly, nullable) YMALabelAppearance *titleAppearance;
 
 /**
- * Review count label appearance.
+ Appearance settings for the number of app reviews.
  */
 @property (nonatomic, copy, readonly, nullable) YMALabelAppearance *reviewCountAppearance;
 
 /**
- * Warning label appearance.
+ Appearance settings for the warning text.
  */
 @property (nonatomic, copy, readonly, nullable) YMALabelAppearance *warningAppearance;
 
 /**
- * Provides appearance, configured with default values.
- *
- * @return Appearance configured with default values.
+ Creates an object with default settings for the standard design.
+ @return Returns an object with the default settings for the standard design.
  */
 + (instancetype)defaultAppearance;
 
 @end
 
 /**
- * YMAMutableNativeTemplateAppearance is mutable version of YMANativeTemplateAppearance, which allows
- * to modify appearance.
+ Class with editable settings for the standard button design.
  */
 @interface YMAMutableNativeTemplateAppearance : YMANativeTemplateAppearance
 
 /**
- * Banner border width.
+ Width of the border.
  */
 @property (nonatomic, assign) CGFloat borderWidth;
 
 /**
- * Banner border color.
+ Color of the border.
  */
 @property (nonatomic, strong) UIColor *borderColor;
 
 /**
- * Banner background color.
+ Background color.
  */
 @property (nonatomic, strong) UIColor *backgroundColor;
 
 /**
- * Horizontal space between banner edge and content.
+ Horizontal (left and right) margins between the content and the edges of the ad.
+ @discussion Measured in logical pixels.
  */
 @property (nonatomic, assign) YMAHorizontalOffset contentPadding;
 
 /**
- * Horizontal image margins: left margin determines image offset from left content padding,
- * right margin determines offset between image and text block.
+ The horizontal margins around the image, relative to the ad content.
+ @discussion The left margin is relative to the left edge of the content.
+ The right margin is the gap between the right edge of the image and the left edge of the text.
+ @warning It doesn't apply to large images that are placed under the main ad text
+ and cover the entire width of the ad.
  */
 @property (nonatomic, assign) YMAHorizontalOffset imageMargins;
 
 /**
- * Age label appearance.
+ Appearance settings for the text with age restrictions.
  */
 @property (nonatomic, copy, nullable) YMALabelAppearance *ageAppearance;
 
 /**
- * Body label appearance.
+ Appearance settings for the main ad text.
  */
 @property (nonatomic, copy, nullable) YMALabelAppearance *bodyAppearance;
 
 /**
- * Call to action button appearance.
+ Appearance settings for a call-to-action button (for example, the Install button).
  */
 @property (nonatomic, copy, nullable) YMAButtonAppearance *callToActionAppearance;
 
 /**
- * Domain label appearance.
+ Appearance settings for the domain text.
  */
 @property (nonatomic, copy, nullable) YMALabelAppearance *domainAppearance;
 
 /**
- * Favicon image appearance.
+ Appearance settings for the favicon.
  */
 @property (nonatomic, copy, nullable) YMAImageAppearance *faviconAppearance;
 
 /**
- * Image appearance.
+ Appearance settings for the image.
+ @warning It doesn't apply to large images that are placed under the main ad text
+ and cover the entire width of the ad.
  */
 @property (nonatomic, copy, nullable) YMAImageAppearance *imageAppearance;
 
 /**
- * Star rating appearance.
+ Appearance settings for the rating.
  */
 @property (nonatomic, copy, nullable) YMARatingAppearance *ratingAppearance;
 
 /**
- * Sponsored label appearance.
+ Appearance settings for the ad network text.
  */
 @property (nonatomic, copy, nullable) YMALabelAppearance *sponsoredAppearance;
 
 /**
- * Title label appearance.
+ Appearance settings for the ad title text.
  */
 @property (nonatomic, copy, nullable) YMALabelAppearance *titleAppearance;
 
 /**
- * Votes number label appearance.
+ Appearance settings for the number of app reviews.
  */
 @property (nonatomic, copy, nullable) YMALabelAppearance *reviewCountAppearance;
 
 /**
- * Warning label appearance.
+ Appearance settings for the warning text.
  */
 @property (nonatomic, copy, nullable) YMALabelAppearance *warningAppearance;
 

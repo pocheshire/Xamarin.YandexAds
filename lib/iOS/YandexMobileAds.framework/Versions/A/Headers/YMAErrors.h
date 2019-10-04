@@ -1,5 +1,5 @@
 /*
- * Version for iOS © 2015–2018 YANDEX
+ * Version for iOS © 2015–2019 YANDEX
  *
  * You may not use this file except in compliance with the License.
  * You may obtain a copy of the License at https://yandex.com/legal/mobileads_sdk_agreement/
@@ -7,33 +7,64 @@
 
 #import <Foundation/Foundation.h>
 
-/* Yandex Mobile Ads error domain. */
+/**
+ Common domain for `Yandex Mobile Ads` library errors.
+ */
 extern NSString *const kYMAAdsErrorDomain;
 
-/* Yandex Mobile Ads error codes. */
+/**
+ Error description.
+ */
 typedef NS_ENUM(NSUInteger, YMAAdErrorCode) {
-    /* Returned when block ID is not specified. */
+    /**
+     The `BlockID` was omitted when loading the ad.
+     */
     YMAAdErrorCodeEmptyBlockID,
-    /* Returned when banner size is invalid. */
+    /**
+     An invalid banner size is specified.
+     */
     YMAAdErrorCodeInvalidBannerSize,
-    /* Returned when Application ID is invalid. */
+    /**
+     An invalid `Application ID` was specified.
+     */
     YMAAdErrorCodeInvalidUUID,
-    /* Returned when provided block ID doesn't exist. */
+    /**
+     The `BlockID` specified when loading the ad wasn't found.
+     */
     YMAAdErrorCodeNoSuchBlockID,
-    /* Returned when ad request completed successfully, but there are no ads at the moment. */
+    /**
+     The ad was loaded successfully, but there aren't any available ads to display.
+     */
     YMAAdErrorCodeNoFill,
-    /* Returned for unexpected server responses. */
+    /**
+     Unexpected server response when loading the ad.
+     */
     YMAAdErrorCodeBadServerResponse,
-    /* Returned when requested ad size doesn't match received ad size. */
+    /**
+     The ad size in the request does not match the ad size specified in the Partner interface for this ad block.
+     */
     YMAAdErrorCodeBannerSizeMismatch,
-    /* Returned when requested ad type doesn't match received ad type. */
+    /**
+     The ad type in the request does not match the ad type specified in the Partner interface for this ad block.
+     */
     YMAAdErrorCodeAdTypeMismatch,
-    /* Returned when ad service is temporarily not available. Ad request may be retried later. */
+    /**
+     The service is temporarily unavailable. Try sending the request again later.
+     */
     YMAAdErrorCodeServiceTemporarilyNotAvailable,
-    /* Returned for attempt to display interstitial which has already been displayed. */
+    /**
+     A full-screen ad can be shown only once.
+     */
     YMAAdErrorCodeInterstitialHasAlreadyBeenPresented,
-    /* Returned when interstitial can not be displayed in current orientation. */
+    /**
+     The ad can't be displayed because of the orientation (the size of the screen and the ad don't match).
+     */
     YMAAdErrorCodeInterstitialOrientationMismatch,
-    /* Returned for attempt to load ad if AppMetrica has not been activated. */
-    YMAAdErrorCodeMetricaNotStarted
+    /**
+     The AppMetrica library hasn't been initialized.
+     */
+    YMAAdErrorCodeMetricaNotStarted,
+    /** A rewarded ad can be shown only once.
+     */
+    YMAAdErrorCodeRewardedHasAlreadyBeenPresented
 };

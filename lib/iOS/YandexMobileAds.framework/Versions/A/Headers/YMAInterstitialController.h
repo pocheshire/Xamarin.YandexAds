@@ -1,5 +1,5 @@
 /*
- * Version for iOS © 2015–2018 YANDEX
+ * Version for iOS © 2015–2019 YANDEX
  *
  * You may not use this file except in compliance with the License.
  * You may obtain a copy of the License at https://yandex.com/legal/mobileads_sdk_agreement/
@@ -10,126 +10,136 @@
 @class YMAAdRequest;
 
 @protocol YMAInterstitialDelegate;
-
+/**
+ This class is responsible for loading a full-screen ad.
+ */
 @interface YMAInterstitialController : UIViewController
 
 /**
- * Unique ad placement ID created at partner interface.
- * Example: R-128282-4
+ The Block ID is a unique identifier in the R-M-XXXXXX-Y format, which is assigned in the Partner interface.
  */
 @property (nonatomic, copy, readonly) NSString *blockID;
 
 /**
- * Indicates if interstitial content has been loaded and ready to be presented.
- * Delegate methods interstitialDidLoadAd: called just after this property value set YES.
+ Notifies that the ad is loaded and ready to be displayed.
+ @discussion After the property takes the `YES` value,
+ the [YMAInterstitialDelegate interstitialDidLoadAd:] delegate method is called.
  */
 @property (nonatomic, assign, readonly) BOOL loaded;
 
 /**
- * Optional delegate, that receives life-cycle events from ad
+ Tracks ad lifecycle events.
  */
 @property (nonatomic, weak) id<YMAInterstitialDelegate> delegate;
 
 /**
- * If set to YES, web links are opened in in-app broswer.
- * If set to NO, web links are opened in Safari.
- * Default is NO.
+ Defines whether to open links in the app or in the browser installed on the device. The default value is `NO`.
  */
 @property (nonatomic, assign) BOOL shouldOpenLinksInApp;
 
 /**
- * Returns YES if the interstitial controller has already been presented.
- * Note that an interstitial controller can only be presented once. 
- * New instance should be created for each presentation.
+ Notifies whether the ad was displayed.
  */
 @property (nonatomic, assign, readonly) BOOL hasBeenPresented;
 
 /**
- * Initializer. 
- * @param blockID Unique string that identifies ad type, size ... at application.
- * This ID could be obtained from the partner interface (partner.yandex.ru).
+ Initializes an object of the YMAInterstitialController class with a full-screen ad.
+ @param blockID The Block ID is a unique identifier in the R-M-XXXXXX-Y format,
+ which is assigned in the Partner interface.
+ @return An object of the YMAInterstitialController class with a full-screen ad.
  */
 - (instancetype)initWithBlockID:(NSString *)blockID;
 
 /**
- * Starts loading interstitial ad.
- * Interstitial ads are usually preloaded and then displayed between screen changes.
+ Preloads an ad.
+ @discussion After this, use the [YMAInterstitialController presentInterstitialFromViewController:] method
+ to start displaying the ad.
  */
 - (void)load;
 
 /**
- * Starts loading interstitial ad with specific request.
- * Interstitial ads are usually preloaded and then displayed between screen changes.
- * @param request Ad request containg data for targeting.
+ Preloads the ad by setting the data for targeting.
+ @param request Data for targeting.
  */
 - (void)loadWithRequest:(YMAAdRequest *)request;
 
 /**
- * This method should be called after preload is finished.
- * When preload is finished delegate will receive 'interstitialDidLoadAd:' and 'loaded' property will be set to YES.
- * Before that moment this call will has no effect.
- * Calling this method will invoke delegate's 'interstitialWillAppear:' just before presenting interstitial ad,
- *  and 'interstitialDidAppear:' right after presentation animation is over. When user dismisses ad first 'interstitialWillDisappear:' is called just before starting dismiss animation and then
- * 'interstitialDidDisappear:' will be called on delegate right after ad dismissal.
- * @param viewController Controller's 'presentViewController:' used to present fullscreen interstitial ad.
+ Use this method to display a full-screen ad after preloading.
+ @param viewController An object of the `UIViewController` class, which is used to display a full-screen ad.
  */
 - (void)presentInterstitialFromViewController:(UIViewController *)viewController;
 
 /**
- * @see presentInterstitialFromViewController:
- *
- *@param dismissalBlock Block executed right after interstitial dismissed.
+ Use this method to display a full-screen ad after preloading
+ if you need the app to perform some action immediately after showing the ad.
+ @param viewController An object of the `UIViewController` class.
+ @param dismissalBlock A block of code that executes after the ad is shown.
  */
 - (void)presentInterstitialFromViewController:(UIViewController *)viewController dismissalBlock:(void(^)(void))dismissalBlock;
 
 @end
-
+/**
+ The protocol defines the methods of a delegate that monitors the ads.
+ @discussion Methods are called by an object of the YMAInterstitialController class when its state changes.
+ */
 @protocol YMAInterstitialDelegate <NSObject>
 
 @optional
 
 /**
- * Called as indicator that preload is finished and ad is ready to be presented using 'presentInterstitialFromViewController:'.
+ Notifies that the ad loaded successfully.
+ @param interstitial A reference to an object of the YMAInterstitialController class that invoked the method.
  */
 - (void)interstitialDidLoadAd:(YMAInterstitialController *)interstitial;
 
 /**
- * Called if ad failed to load. Failure describes reason. List of error codes could be found in 'YMAErrors.h'.
+ Notifies that the ad failed to load.
+ @param interstitial A reference to an object of the YMAInterstitialController class that invoked the method.
+ @param error Information about the error (for details, see YMAAdErrorCode).
  */
 - (void)interstitialDidFailToLoadAd:(YMAInterstitialController *)interstitial error:(NSError *)error;
 
 /**
- * Called before application will resign active as a result user clicking an ad that will start some other application, such as AppStore or Phone.
+ Notifies that the app will run in the background now because the user clicked the ad
+ and is switching to a different application (Phone, App Store, and so on).
+ @param interstitial A reference to an object of the YMAInterstitialController class that invoked the method.
  */
 - (void)interstitialWillLeaveApplication:(YMAInterstitialController *)interstitial;
 
 /**
- * Called if ad could not be presented. Failure describes reason. List of error codes could be found in 'YMAErrors.h'.
+ Notifies that the ad can't be displayed.
+ @param interstitial A reference to an object of the YMAInterstitialController class that invoked the method.
+ @param error Information about the error (for details, see YMAAdErrorCode).
  */
 - (void)interstitialDidFailToPresentAd:(YMAInterstitialController *)interstitial error:(NSError *)error;
 
 /**
- * Called just before interstitial starts presentation
+ Called before the full-screen ad appears.
+ @param interstitial A reference to an object of the YMAInterstitialController class that invoked the method.
  */
 - (void)interstitialWillAppear:(YMAInterstitialController *)interstitial;
 
 /**
- * Called just after interstitial has been presented
+ Called after the full-screen ad appears.
+ @param interstitial A reference to an object of the YMAInterstitialController class that invoked the method.
  */
 - (void)interstitialDidAppear:(YMAInterstitialController *)interstitial;
 
 /**
- * Called just before interstitial dismissed.
+ Called before hiding the full-screen ad.
+ @param interstitial A reference to an object of the YMAInterstitialController class that invoked the method.
  */
 - (void)interstitialWillDisappear:(YMAInterstitialController *)interstitial;
 
 /**
- * Called just after interstitial has been dismissed.
+ Called after hiding the full-screen ad.
+ @param interstitial A reference to an object of the YMAInterstitialController class that invoked the method.
  */
 - (void)interstitialDidDisappear:(YMAInterstitialController *)interstitial;
 
 /**
- * Called before presenting some other fullscreen content such as in-app web browser as a result of user interactions with ad.
+ Notifies that the embedded browser will be displayed.
+ @param webBrowser The in-app browser.
  */
 - (void)interstitialWillPresentScreen:(UIViewController *)webBrowser;
 

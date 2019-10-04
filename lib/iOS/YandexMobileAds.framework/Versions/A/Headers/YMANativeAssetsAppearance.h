@@ -1,5 +1,5 @@
 /*
- * Version for iOS © 2015–2018 YANDEX
+ * Version for iOS © 2015–2019 YANDEX
  *
  * You may not use this file except in compliance with the License.
  * You may obtain a copy of the License at https://yandex.com/legal/mobileads_sdk_agreement/
@@ -12,37 +12,47 @@ NS_ASSUME_NONNULL_BEGIN
 @class YMASizeConstraint;
 
 /**
- * YMASizeConstraintType should be used to configure image sizes with YMASizeConstraint.
+ Object sizing constraint.
  */
 typedef NS_ENUM(NSInteger, YMASizeConstraintType) {
+    /**
+     Fixed width or height.
+     */
     YMASizeConstraintTypeFixed,
+    /**
+     The ratio of the size of something to the size of the entire contents.
+     The actual size of the content is not considered.
+     */
     YMASizeConstraintTypeFixedBannerRatio,
+    /**
+     The ratio of the size of something to the size of the entire content,
+     but no more than the actual size of the content.
+     */
     YMASizeConstraintTypePreferredBannerRatio
 };
 
 /**
- * YMALabelAppearance provides interfaces for labels customization.
- * Use YMAMutableLabelAppearance to change appearance values, e.g. @p [appearance mutableCopy].
+ A class with fixed settings for the standard text appearance: font name, size, and color.
+ @discussion If you want to edit the settings of the standard appearance,
+ use the YMAMutableLabelAppearance class.
  */
 @interface YMALabelAppearance : NSObject <NSCopying, NSMutableCopying>
 
 /**
- * Label font.
+ Font settings: name and size.
  */
 @property (nonatomic, strong, readonly) UIFont *font;
 
 /**
- * Label text color.
+ Text color.
  */
 @property (nonatomic, strong, readonly) UIColor *textColor;
 
 /**
- * Returns label appearance configured with font and text color.
- *
- * @param font Label font.
- * @param textColor Label text color.
- *
- * @return Label appearance.
+ Creates an object of the YMALabelAppearance class with the text settings.
+ @param font Font settings: name and size.
+ @param textColor Text color.
+ @return The configured text appearance (the specified font and color).
  */
 + (instancetype)appearanceWithFont:(UIFont *)font
                          textColor:(UIColor *)textColor;
@@ -50,68 +60,68 @@ typedef NS_ENUM(NSInteger, YMASizeConstraintType) {
 @end
 
 /**
- * Mutable version of YMALabelAppearance, which allows to change appearance values.
+ Class with editable text settings.
  */
 @interface YMAMutableLabelAppearance : YMALabelAppearance
 
 /**
- * Label font.
+ Font settings: name and size.
  */
 @property (nonatomic, strong) UIFont *font;
 
 /**
- * Label text color.
+ Text color.
  */
 @property (nonatomic, strong) UIColor *textColor;
 
 @end
 
 /**
- * YMAButtonAppearance provides interfaces for buttons customization.
- * Use YMAMutableButtonAppearance to change appearance values, e.g. @p [appearance mutableCopy].
+ A class with fixed settings for the standard button appearance.
+ @discussion If you want to edit the standard appearance settings,
+ use the YMAMutableNativeTemplateAppearance class.
  */
 @interface YMAButtonAppearance : NSObject <NSCopying, NSMutableCopying>
 
 /**
- * Text label appearance.
+ Settings for the button label.
  */
 @property (nonatomic, copy, readonly) YMALabelAppearance *textAppearance;
 
 /**
- * Button text color for highlighted state.
+ Label color when the button is clicked.
  */
 @property (nonatomic, strong, readonly) UIColor *highlightedTextColor;
 
 /**
- * Button background color for normal state.
+ The color of the button background in its normal state.
  */
 @property (nonatomic, strong, readonly) UIColor *normalColor;
 
 /**
- * Button background color for highlighted state.
+ The color of the button background when clicked.
  */
 @property (nonatomic, strong, readonly) UIColor *highlightedColor;
 
 /**
- * Button border color.
+ The color of the button border.
  */
 @property (nonatomic, strong, readonly) UIColor *borderColor;
 
 /**
- * Button border width.
+ The thickness of the button border.
  */
 @property (nonatomic, assign, readonly) CGFloat borderWidth;
 
 /**
- * Returns button appearance configured with title appearance and background colors.
- *
- * @param textAppearance Title label appearance.
- * @param normalColor Background color for normal state.
- * @param highlightedColor Background color for highlighted state.
- * @param borderColor Button border color.
- * @param borderWidth Button border width.
- *
- * @return Button appearance.
+ Creates an object of the YMAButtonAppearance class,
+ i.e., a button with the specified appearance (label font, label color, border color, and other settings).
+ @param textAppearance Settings for the button label.
+ @param normalColor The color of the button background in its normal state.
+ @param highlightedColor The color of the button background when clicked.
+ @param borderColor The color of the button border.
+ @param borderWidth The thickness of the button border.
+ @return Configured button appearance.
  */
 + (instancetype)appearanceWithTextAppearance:(YMALabelAppearance *)textAppearance
                                  normalColor:(UIColor *)normalColor
@@ -120,16 +130,15 @@ typedef NS_ENUM(NSInteger, YMASizeConstraintType) {
                                  borderWidth:(CGFloat)borderWidth;
 
 /**
- * Returns button appearance configured with title appearance, highlighted text color, border and background colors.
- *
- * @param textAppearance Title label appearance.
- * @param highlightedTextColor Text color for highlighted state.
- * @param normalColor Background color for normal state.
- * @param highlightedColor Background color for highlighted state.
- * @param borderColor Button border color.
- * @param borderWidth Button border width.
- *
- * @return Button appearance.
+ Creates an object of the YMAButtonAppearance class,
+ i.e., a button with the specified appearance (label font, label color, border color, and other settings).
+ @param textAppearance Settings for the button label.
+ @param highlightedTextColor Label color when the button is clicked.
+ @param normalColor The color of the button background in its normal state.
+ @param highlightedColor The color of the button background when clicked.
+ @param borderColor The color of the button border.
+ @param borderWidth The thickness of the button border.
+ @return Configured button appearance.
  */
 + (instancetype)appearanceWithTextAppearance:(YMALabelAppearance *)textAppearance
                         highlightedTextColor:(UIColor *)highlightedTextColor
@@ -141,72 +150,73 @@ typedef NS_ENUM(NSInteger, YMASizeConstraintType) {
 @end
 
 /**
- * Mutable version of YMAButtonAppearance, which allows to change appearance values.
+ Class with editable settings for the standard button appearance.
  */
 @interface YMAMutableButtonAppearance : YMAButtonAppearance
 
 /**
- * Text label appearance.
+ Settings for the button label.
  */
 @property (nonatomic, copy) YMALabelAppearance *textAppearance;
 
 /**
- * Button text color for highlighted state.
+ Label color when the button is clicked.
  */
 @property (nonatomic, strong) UIColor *highlightedTextColor;
 
 /**
- * Button background color for normal state.
+ The color of the button background in its normal state.
  */
 @property (nonatomic, strong) UIColor *normalColor;
 
 /**
- * Button background color for highlighted state.
+ The color of the button background when clicked.
  */
 @property (nonatomic, strong) UIColor *highlightedColor;
 
 /**
- * Button border color.
+ The color of the button border.
  */
 @property (nonatomic, strong) UIColor *borderColor;
 
 /**
- * Button border width.
+ The thickness of the button border.
  */
 @property (nonatomic, assign) CGFloat borderWidth;
 
 @end
 
 /**
- * YMARatingAppearance provides interfaces for star rating view customization.
- * Use YMAMutableRatingAppearance to change appearance values, e.g. @p [appearance mutableCopy].
+ A class with fixed settings for the standard rating appearance.
+ @discussion If you want to edit the settings of the standard appearance,
+ use the YMAMutableRatingAppearance class.
  */
 @interface YMARatingAppearance : NSObject <NSCopying, NSMutableCopying>
 
 /**
- * Color for empty star.
+ The outline color of an empty (unfilled) star.
  */
 @property (nonatomic, strong, readonly) UIColor *emptyStarColor;
 
 /**
- * Color for filled star.
+ The color of a filled star.
  */
 @property (nonatomic, strong, readonly) UIColor *filledStarColor;
 
 /**
- * Preferred size of one star. If value of size is larger than size that fits designated space,
- * then size is reduced to fit this space.
+ The preferred size of a star.
+ @warning If the use of the preferred size makes the rating too large for the space reserved for it,
+ the maximum allowed size is used instead.
  */
 @property (nonatomic, assign, readonly) CGFloat preferredStarSize;
 
 /**
- * Returns star rating appearance configured with star colors and preferred size.
- *
- * @param emptyStarColor Color for empty star.
- * @param filledStarColor Color for filled star.
- * @param starSize Preferred star size.
- *
- * @return Star rating appearance.
+ Creates an object of the YMARatingAppearance class,
+ i.e., a rating with the specified appearance (outline color, size, and other settings).
+ @param emptyStarColor The outline color of an empty (unfilled) star.
+ @param filledStarColor The color of a filled star.
+ @param starSize The preferred size of a star.
+ @return Configured rating appearance.
  */
 + (instancetype)appearanceWithEmptyStarColor:(UIColor *)emptyStarColor
                              filledStarColor:(UIColor *)filledStarColor
@@ -215,122 +225,103 @@ typedef NS_ENUM(NSInteger, YMASizeConstraintType) {
 @end
 
 /**
- * Mutable version of YMARatingAppearance, which allows to change appearance values.
+ A class with editable settings for the standard rating appearance.
  */
 @interface YMAMutableRatingAppearance : YMARatingAppearance
 
 /**
- * Color for empty star.
+ The outline color of an empty (unfilled) star.
  */
 @property (nonatomic, strong) UIColor *emptyStarColor;
 
 /**
- * Color for filled star.
+ The color of a filled star.
  */
 @property (nonatomic, strong) UIColor *filledStarColor;
 
 /**
- * Preferred size of one star. If value of size is larger than size that fits designated space,
- * then size is reduced to fit this space.
+ The preferred size of a star.
+ @warning If the use of the preferred size makes the rating too large for the space reserved for it,
+ the maximum allowed size is used instead.
  */
 @property (nonatomic, assign) CGFloat preferredStarSize;
 
 @end
 
 /**
- * YMAImageAppearance provides interfaces for images customization.
- * Use YMAMutableImageAppearance to change appearance values, e.g. @p [appearance mutableCopy].
+ Class with standard image appearance settings (non-editable).
+ @discussion If you want to edit the settings of the standard appearance,
+ use the YMAMutableRatingAppearance class.
  */
 @interface YMAImageAppearance : NSObject <NSCopying, NSMutableCopying>
 
 /**
- * Size constraint.
+ Limits the width of the image.
  */
 @property (nonatomic, strong, readonly) YMASizeConstraint *widthConstraint;
 
 /**
- * Returns image appearance configured with width constraint.
- *
- * @param widthConstraint Constraint which defines the way image width should be calculated.
- *
- * @return Image appearance.
+ Creates an object of the YMAImageAppearance class,
+ i.e., an image with the specified sizing constraint.
+ @param widthConstraint Limits the width of the image.
+ @return Configured image appearance.
  */
 + (instancetype)appearanceWithWidthConstraint:(YMASizeConstraint *)widthConstraint;
 
 @end
 
 /**
- * Mutable version of YMAImageAppearance, which allows to change appearance values.
+ Class with editable settings for the standard image appearance.
  */
 @interface YMAMutableImageAppearance : YMAImageAppearance
 
 /**
- * Size constraint.
+ Limits the width of the image.
  */
 @property (nonatomic, strong) YMASizeConstraint *widthConstraint;
 
 @end
 
 /**
- * YMASizeConstraint defines the way size is calculated based on banner size.
- * Use YMAMutableSizeConstraint to change appearance values, e.g. @p [appearance mutableCopy].
+ A class with object sizing constraints.
+ @discussion If you want to edit the object sizing constraints, use the YMAMutableSizeConstraint class.
  */
 @interface YMASizeConstraint : NSObject <NSCopying, NSMutableCopying>
 
 /**
- * Constraint type.
- *
- * YMASizeConstraintTypeFixed defines fixed size which never changes.
- * YMASizeConstraintTypeFixedBannerRatio defines fixed asset size to banner size ratio which never changes.
- * YMASizeConstraintTypePreferredBannerRatio defines asset size to banner size ratio
- * which may change to fit real image size.
+ Object sizing constraint.
+ @discussion Acceptable values are listed in YMASizeConstraintType enum.
  */
 @property (nonatomic, assign, readonly) YMASizeConstraintType type;
 
 /**
- * Constraint value.
- *
- * Fixed value in points for YMASizeConstraintTypeFixed, e.g. 140.
- * Ratio value for YMASizeConstraintTypeFixedBannerRatio between 0 and 1,
- * e.g. 0.5 value means size of 100 points for 200 banner size.
- * Ratio value for YMASizeConstraintTypePreferredBannerRatio between 0 and 1.
+ The constraint value. The meaning of the value depends on the `type` property.
  */
 @property (nonatomic, assign, readonly) CGFloat value;
 
 /**
- * Returns size constraint configured with size type and value.
- *
- * @param type Constraint size type. @see YMASizeConstraintType.
- * @param value Constraint value. Value meaning differs depending on size type.
- *
- * @return Size constraint.
+ Creates an object of the YMASizeConstraint class, i.e., the object sizing constraint.
+ @param type Object sizing constraint. Acceptable values are listed in YMASizeConstraintType.
+ @param value The constraint value. The meaning of the value depends on the `type` property.
+ @return The specified object sizing constraint.
  */
 + (instancetype)constraintWithType:(YMASizeConstraintType)type value:(CGFloat)value;
 
 @end
 
 /**
- * Mutable version of YMASizeConstraint, which allows to change constraint values.
+ A class with editable object sizing constraints.
  */
 @interface YMAMutableSizeConstraint : YMASizeConstraint
 
 /**
- * Constraint type.
- *
- * YMASizeConstraintTypeFixed defines fixed size which never changes.
- * YMASizeConstraintTypeFixedBannerRatio defines fixed asset size to banner size ratio which never changes.
- * YMASizeConstraintTypePreferredBannerRatio defines asset size to banner size ratio
- * which may change to fit real image size.
+ Object sizing constraint.
+ @discussion Acceptable values are listed in YMASizeConstraintType.
  */
 @property (nonatomic, assign) YMASizeConstraintType type;
 
 /**
- * Constraint value.
- *
- * Fixed value in points for YMASizeConstraintTypeFixed, e.g. 140.
- * Ratio value for YMASizeConstraintTypeFixedBannerRatio between 0 and 1,
- * e.g. 0.5 value means size of 100 points for 200 banner size.
- * Ratio value for YMASizeConstraintTypePreferredBannerRatio between 0 and 1.
+ The constraint value. The meaning of the value depends on the `type` property.
  */
 @property (nonatomic, assign) CGFloat value;
 

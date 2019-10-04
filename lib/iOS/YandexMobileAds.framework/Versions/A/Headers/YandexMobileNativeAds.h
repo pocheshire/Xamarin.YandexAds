@@ -1,5 +1,5 @@
 /*
- * Version for iOS © 2015–2018 YANDEX
+ * Version for iOS © 2015–2019 YANDEX
  *
  * You may not use this file except in compliance with the License.
  * You may obtain a copy of the License at https://yandex.com/legal/mobileads_sdk_agreement/
@@ -26,3 +26,5 @@
 #import <YandexMobileAds/YMANativeAdLoaderConfiguration.h>
 #import <YandexMobileAds/YMANativeAdImage.h>
 #import <YandexMobileAds/YMANativeAdAssets.h>
+#import <YandexMobileAds/YMANativeMediaView.h>
+#import <YandexMobileAds/YMANativeAdMedia.h>

@@ -1,5 +1,5 @@
 /*
- * Version for iOS © 2015–2018 YANDEX
+ * Version for iOS © 2015–2019 YANDEX
  *
  * You may not use this file except in compliance with the License.
  * You may obtain a copy of the License at https://yandex.com/legal/mobileads_sdk_agreement/
@@ -14,53 +14,50 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol YMANativeAdImageLoadingObserver;
 
 /**
- * YMANativeGenericAd represents generic native ad interface and allows to get ad assets.
+ The protocol provides methods for managing an ad and getting the values of the ad assets.
  */
 @protocol YMANativeGenericAd <NSObject>
 
 /**
- * Delegate is notified about clicks and transitions triggered by user interaction with ad.
+ An object implementing the YMANativeAdDelegate protocol
+ that receives events triggered by the user's interaction with the ad.
  */
 @property (nonatomic, weak, nullable) id<YMANativeAdDelegate> delegate;
 
 /**
- * Adds observer which is notified about image loading progress.
- *
- * @param observer Image loading observer.
+ Adds an observer that receives notifications about the image loading process.
+ @param observer The observer of the image loading process.
  */
 - (void)addImageLoadingObserver:(id<YMANativeAdImageLoadingObserver>)observer;
 
 /**
- * Removes observer, so it's no longer notified about image loading progress.
- *
- * @param observer Image loading observer.
+ Removes the observer that receives notifications about the image loading process.
+ @param observer The observer of the image loading process.
  */
 - (void)removeImageLoadingObserver:(id<YMANativeAdImageLoadingObserver>)observer;
 
 /**
- * Returns ad type. @see YMANativeAdTypes.h.
- *
- * @return Ad type.
+ Type of native ad. For acceptable values, see YMANativeAdTypes.
+ @return Returns the type of a native ad.
  */
 - (NSString *)adType;
 
 /**
- * Returns ad assets.
- *
- * @return Ad assets.
+ An object with ad assets.
+ @return Returns an object containing the ad assets.
  */
 - (YMANativeAdAssets *)adAssets;
 
 /**
- * Arbitrary string related to ad
+ Any string in the ad (set in the Partner interface).
+ @warning This property is only used for working with ADFOX.
  */
 @property (nonatomic, copy, readonly) NSString *info;
 
 /**
- * Asynchronously loads ad's images. Every loaded image is set to corresponding UIImageView.
- * Images are not persisted in memory. It means that they should be loaded each time ad is being bound.
- * Typically every bind call should be followed by @p loadImages call 
- * if automatic image loading is disabled in @p YMANativeAdLoaderConfiguration.
+ Loads images if manual loading is selected.
+ @warning All images are cached, but they can be deleted at any time,
+ so you need to call this method before every ad impression.
  */
 - (void)loadImages;
 

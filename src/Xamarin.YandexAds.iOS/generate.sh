@@ -1,1 +1,1 @@
-sharpie bind -output ./ -namespace Xamarin.YandexAds.iOS -sdk iphoneos11.4 -scope Headers Headers/YandexMobileAds-umbrella.h
+sharpie bind -framework ./../../lib/iOS/YandexMobileAds.framework -sdk iphoneos12.4

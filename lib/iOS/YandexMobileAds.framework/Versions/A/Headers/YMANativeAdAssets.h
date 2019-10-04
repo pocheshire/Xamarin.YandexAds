@@ -1,5 +1,5 @@
 /*
- * Version for iOS © 2015–2018 YANDEX
+ * Version for iOS © 2015–2019 YANDEX
  *
  * You may not use this file except in compliance with the License.
  * You may obtain a copy of the License at https://yandex.com/legal/mobileads_sdk_agreement/
@@ -8,80 +8,87 @@
 #import <Foundation/Foundation.h>
 
 @class YMANativeAdImage;
+@class YMANativeAdMedia;
 
 /**
- * Ad assets.
+ Class with native ad assets.
  */
 @interface YMANativeAdAssets : NSObject
 
 /**
- * Age restrictions. Available in content and app install ads.
+ Age restrictions.
  */
 @property (nonatomic, copy, nullable) NSString *age;
 
 /**
- * Ad body text. Available in content and app install ads.
+ The main ad text.
  */
 @property (nonatomic, copy, nullable) NSString *body;
 
 /**
- * Call to action. Available in content and app install ads.
+ The call to action.
  */
 @property (nonatomic, copy, nullable) NSString *callToAction;
 
+
 /**
- * Advertiser's domain. Available in content and app install ads.
+ The domain.
  */
 @property (nonatomic, copy, nullable) NSString *domain;
 
 /**
- * Website favicon. Available in content ads.
+ The web page's favicon.
  */
 @property (nonatomic, strong, nullable) YMANativeAdImage *favicon;
 
 /**
- * YES if ad has ability to process user feedback by displaying corresponding button, otherwise NO.
- * May be available in content, app install and image ads.
+ Reports about the necessity to show `feedbackButton`
+ (YMANativeAppInstallAdView, YMANativeContentAdView, YMANativeImageAdView).
  */
 @property (nonatomic, assign) BOOL feedbackAvailable;
 
 /**
- * App icon. Available in app install ads.
+ The app's icon.
  */
 @property (nonatomic, strong, nullable) YMANativeAdImage *icon;
 
 /**
- * Main ad image. Available in content, app install and image ads.
+ The main image.
  */
 @property (nonatomic, strong, nullable) YMANativeAdImage *image;
 
 /**
- * Price. Available in app install ads.
+ Ad media.
+ */
+@property (nonatomic, strong, nullable) YMANativeAdMedia *media;
+
+/**
+ The price of the advertised app.
  */
 @property (nonatomic, copy, nullable) NSString *price;
 
 /**
- * App rating. Available in app install ads.
+ The app's rating.
  */
 @property (nonatomic, strong, nullable) NSNumber *rating;
 
 /**
- * App reviews number. Available in app install ads.
+ The number of app reviews.
  */
 @property (nonatomic, copy, nullable) NSString *reviewCount;
 
 /**
- * Sponsored text. Available in content and app install ads.
+ Data on the ad network.
  */
 @property (nonatomic, copy, nullable) NSString *sponsored;
 
 /**
- * Ad title. Available in content and app install ads.
+ The ad title.
  */
 @property (nonatomic, copy, nullable) NSString *title;
 
 /**
- * Warning text. Available in content and app install ads.
+ The warning.
  */
 @property (nonatomic, copy, nullable) NSString *warning;
 

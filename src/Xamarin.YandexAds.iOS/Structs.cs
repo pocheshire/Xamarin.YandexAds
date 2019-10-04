@@ -46,6 +46,12 @@ namespace Xamarin.YandexAds.iOS
     }
 
     [Native]
+    public enum YMAVMAPErrorCode : ulong
+    {
+        YMAVMAPErrorCodeInvalidXMLResponse
+    }
+
+    [Native]
     public enum YMABlockType : ulong
     {
         Unknown,
@@ -78,7 +84,8 @@ namespace Xamarin.YandexAds.iOS
         ServiceTemporarilyNotAvailable,
         InterstitialHasAlreadyBeenPresented,
         InterstitialOrientationMismatch,
-        MetricaNotStarted
+        MetricaNotStarted,
+        RewardedHasAlreadyBeenPresented
     }
 
     [Native]
@@ -98,7 +105,7 @@ namespace Xamarin.YandexAds.iOS
         AdTypeMismatch
     }
 
-    [StructLayout (LayoutKind.Sequential)]
+    [StructLayout(LayoutKind.Sequential)]
     public struct YMAHorizontalOffset
     {
         public nfloat left;
@@ -107,7 +114,7 @@ namespace Xamarin.YandexAds.iOS
     }
 
     [Native]
-    public enum YMASizeConstraintType : long
+    public enum YMASizeConstraintType : ulong
     {
         Fixed,
         FixedBannerRatio,

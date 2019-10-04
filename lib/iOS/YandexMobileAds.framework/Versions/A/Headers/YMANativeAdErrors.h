@@ -1,5 +1,5 @@
 /*
- * Version for iOS © 2015–2018 YANDEX
+ * Version for iOS © 2015–2019 YANDEX
  *
  * You may not use this file except in compliance with the License.
  * You may obtain a copy of the License at https://yandex.com/legal/mobileads_sdk_agreement/
@@ -10,14 +10,24 @@
 /* Yandex Mobile Native Ads error domain. */
 extern NSString *const kYMANativeAdErrorDomain;
 
-/* Yandex Mobile Ads error codes. */
+/**
+ Error description.
+ */
 typedef NS_ENUM(NSUInteger, YMANativeErrorCode) {
-    /* Returned for attempt to bind ad to view without providing view for any of required assets. */
+    /**
+     Occurs when binding an ad if the `UIView` is omitted for a required asset.
+     */
     YMANativeAdErrorCodeNoViewForAsset,
-    /* Returned for attempt to bind ad to invalid view. */
+    /**
+     Occurs when the nil value is passed to the ad binding method as the `View`.
+     */
     YMANativeAdErrorCodeInvalidViewForBinding,
-    /* Returned for attempt to bind invalid ad. */
+    /**
+     Occurs when the nil value is passed to the ad binding method as the `binder`.
+     */
     YMANativeAdErrorCodeInvalidBinder,
-    /* Returned for attempt to bind ad to view which doesn't correspond ad type. */
+    /**
+     Attempt to bind an ad to an incompatible type of `View`.
+     */
     YMANativeAdErrorCodeAdTypeMismatch
 };

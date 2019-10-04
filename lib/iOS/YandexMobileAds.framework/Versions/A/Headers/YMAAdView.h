@@ -1,5 +1,5 @@
 /*
- * Version for iOS © 2015–2018 YANDEX
+ * Version for iOS © 2015–2019 YANDEX
  *
  * You may not use this file except in compliance with the License.
  * You may obtain a copy of the License at https://yandex.com/legal/mobileads_sdk_agreement/
@@ -9,145 +9,136 @@
 
 @class YMAAdRequest;
 @class YMAAdSize;
+@class YMAVideoController;
 
 @protocol YMAAdViewDelegate;
-
+/**
+ This class is responsible for setting up and displaying the banner.
+ */
 @interface YMAAdView : UIView
 
 /**
- * Delegate receives notifications from YMAAdView and provides
- * #- (UIViewController *)viewControllerForPresentingModalView;
+ It monitors the ad and receives notifications about user interaction with the ad.
+ @discussion It provides data necessary for displaying the ad
+ (for example, a `UIViewController` object that `AdView` uses to show a modal controller
+ in response to the user interacting with the banner).
  */
 @property (nonatomic, weak) id<YMAAdViewDelegate> delegate;
 
 /**
- * This is required property. This is unique ad placement ID created at partner interface. 
- * Identifies ad placement at specific application.
- * Example: R-128282-4
+ The Block ID is a unique identifier in the R-M-XXXXXX-Y format, which is assigned in the Partner interface.
  */
 @property (nonatomic, copy, readonly) NSString *blockID;
 
 /**
- * Create and initialize ad view with given blockID and size.
- * Simplest way to add banner to view is doing this by using methods:
- *
- * #- (void)displayAtTopInView:(UIView *)view;
- * #- (void)displayAtBottomInView:(UIView *)view;
- *
- * In more complex cases adding layout constraints manually needed.
- * If application uses autolayout ad view's intrinsicContentSize is resolved at the time of #adViewDidLoad: call.
- *
- * @param blockID Unique string that identifies ad type, size ... at application.
- * This ID should be obtained from the partner interface.
- * @param adSize Banner size. One of banner sizes represented by #YMAAdSize class.
- * Banners with flexible sizes have adaptive background.
- * @param delegate Object that implements #YMAAdViewDelegate protocol.
+ VideoController provides playback control for ad video.
+ */
+@property (nonatomic, strong, readonly) YMAVideoController *videoController;
+
+/**
+ Initializes an object of the YMAAdView class to display the banner with the specified size.
+ @param blockID The Block ID is a unique identifier in the R-M-XXXXXX-Y format,
+ which is assigned in the Partner interface.
+ @param adSize The size of the banner. The size of the banner is set in the YMAAdSize class.
+ @param delegate The object implements the YMAAdViewDelegate protocol that monitors the ad.
+ @return Initializes an object of the YMAAdView class to display the banner with the specified size.
  */
 - (instancetype)initWithBlockID:(NSString *)blockID
                          adSize:(YMAAdSize *)adSize
                        delegate:(id<YMAAdViewDelegate>)delegate;
 
 /**
- * Create and initialize ad view with given blockID and fixed size.
- * Use #initWithBlockID:adSize:delegate: for flexible sizes.
- * Simplest way to add banner to view is doing this by using methods:
- *
- * #- (void)displayAtTopInView:(UIView *)view;
- * #- (void)displayAtBottomInView:(UIView *)view;
- *
- * In more complex cases adding layout constraints manually needed.
- * If application uses autolayout ad view's intrinsicContentSize equals to size passed to constructor.
- * @param blockID Unique string that identifies ad type, size ... at application. 
- * This ID should be obtained from the partner interface.
- * @param delegate Object that implements #YMAAdViewDelegate protocol.
- * @param size Banner size. One of fixed banner sizes defined in YMAAdSize.h or maximum space available for ad.
+ Initializes an object of the YMAAdView class to display the banner with the fixed size.
+ @warning This method is deprecated. Use [YMAAdView initWithBlockID:adSize:delegate:].
+ @param blockID The Block ID is a unique identifier in the R-M-XXXXXX-Y format,
+ which is assigned in the Partner interface.
+ @param size The size of the banner.
+ @param delegate The object implements the YMAAdViewDelegate protocol that monitors the ad.
+ @return Initializes an object of the YMAAdView class to display the banner with the specified size.
  */
 - (instancetype)initWithBlockID:(NSString *)blockID
                            size:(CGSize)size
                        delegate:(id<YMAAdViewDelegate>)delegate __attribute__((deprecated("[YMAAdView initWithBlockID:adSize:delegate:] should be used instead")));
 
 /**
- * Add banner at the top-center of view. This implemented by adding layout constraints to adView.
- * Can be used only in views that support autolayout.
- * @param view Parent view for the banner.
+ Displays the banner centered at the top of the passed `View`.
+ @param view Object of the `UIView` class to add the banner to.
  */
 - (void)displayAtTopInView:(UIView *)view;
 
 /**
- * Add banner at the bottom-center of view. This implemented by adding layout constraints to adView.
- * Can be used only in views that support autolayout.
- * @param view Parent view for the banner.
+ Displays the banner centered at the bottom of the passed `View`.
+ @param view An object of the `UIView` class to add the banner to.
  */
 - (void)displayAtBottomInView:(UIView *)view;
 
 /**
- * Start ad loading.
+ Loads a banner.
  */
 - (void)loadAd;
 
 /**
- * Start ad loading with specific request.
- * @param request Ad request containg data for targeting.
+ Loads a banner with data for targeting.
+ @param request Data for targeting.
  */
 - (void)loadAdWithRequest:(YMAAdRequest *)request;
 
 /**
- * Get size of ad's content.
- * @return Size of content inside banner.
+ Returns the size of the banner content.
+ @return The size of the banner content.
  */
 - (CGSize)adContentSize;
 
 @end
 
+/**
+ The protocol defines the methods of a delegate that monitors the ads.
+ @discussion Methods are called by an object of the YMAAdView class when its state changes.
+ */
 @protocol YMAAdViewDelegate <NSObject>
 
 @optional
 
 /**
- * Should be implemented to present ad content in webview. 
- * If method is not implemented, clicks are handled outside of the app with #[UIApplication openURL:].
-
- * @discussion In iOS one view controller cannot present several modal controllers simultaneously.
- * So returned view controller should be the topmost one.
- *
- * @return View controller which will present modal controller as a response to user interaction with banner.
+ Returns a `UIViewController` object that `AdView` uses to show a modal controller
+ in response to the user's interaction with the banner.
+ @discussion Since a single `UIViewController` can't show multiple modal controllers simultaneously,
+ the returned `UIViewController` must be displayed in front of all the other ones.
+ @return The `UIViewController` object that `AdView` uses for showing a modal controller
+ in response to the user's interaction with the banner.
  */
 - (UIViewController *)viewControllerForPresentingModalView;
 
 /**
- * Called each time ad view loaded banner.
- * This is a good opportunity to add this view to the hierarchy if it has not yet been added.
- * @param adView UIView subclass that displays ad.
+ Notifies that the banner is loaded.
+ @discussion At this time, you can add `AdView` if you haven't done so yet.
+ @param adView A reference to the object of the YMAAdView class that invoked the method.
  */
 - (void)adViewDidLoad:(YMAAdView *)adView;
 
 /**
- * Called when loading failed.
- * Usually it is because of no content received from server.
+ Notifies that the banner failed to load.
+ @param adView A reference to the object of the YMAAdView class that invoked the method.
+ @param error Information about the error (for details, see YMAAdErrorCode).
  */
 - (void)adViewDidFailLoading:(YMAAdView *)adView error:(NSError *)error;
 
 /**
- * Called whenever app becomes inactive because user clicked on an ad 
- * that will launch another application (Phone, App Store, SMS).
+ Notifies that the app will become inactive now because the user clicked on the banner ad
+ and is about to switch to a different application (Phone, App Store, and so on).
+ @param adView A reference to the object of the YMAAdView class that invoked the method.
  */
 - (void)adViewWillLeaveApplication:(YMAAdView *)adView;
 
 /**
- * Called just before presenting user a full screen view, such as in-app browser,
- * in response to clicking on an ad.
- * Normally the user looks at the ad, dismisses it, and control returns to your
- * application by calling #adViewDidDismissScreen:. However if the user hits the
- * Home button or clicks on an App Store link your application will end. 
- * Next method called will be applicationWillResignActive: of your
- * application delegate (UIApplicationWillResignActiveNotification).
- * Immediately after that #adViewWillLeaveApplication: is called.
+ Notifies that the user has clicked on the banner and the in-app browser will open now.
+ @param viewController Modal `UIViewController`.
  */
 - (void)adViewWillPresentScreen:(UIViewController *)viewController;
 
 /**
- * Called just after fullscreen view has been dismissed.
- * This is a counterpart method for #adViewWillPresentScreen:
+ Notifies that the user has closed the embedded browser.
+ @param viewController Modal `UIViewController`.
  */
 - (void)adViewDidDismissScreen:(UIViewController *)viewController;
 
