@@ -1,5 +1,5 @@
 /*
- * Version for iOS © 2015–2018 YANDEX
+ * Version for iOS © 2015–2019 YANDEX
  *
  * You may not use this file except in compliance with the License.
  * You may obtain a copy of the License at https://yandex.com/legal/mobileads_sdk_agreement/
@@ -8,36 +8,47 @@
 #import <Foundation/Foundation.h>
 #import <YandexMobileAds/YMADeviceTypes.h>
 
+/**
+ This class allows you to set general SDK settings.
+ */
 @interface YMAMobileAds : NSObject
 
 /**
- * Enables SDK logs. Logs are disabled by default.
+ Enables logging. By default, logging is disabled.
  */
 + (void)enableLogging;
 
 /**
- * Returns SDK version.
- *
- * @return SDK version in X.YY format.
+ Returns the SDK version in the X.YY format.
+ @return The version of the SDK in X.YY format.
  */
 + (NSString *)SDKVersion;
 
-/** Enable/disable location tracking.
- Location is collected automatically if tracking is enabled and application has appropriate permission.
- SDK does not prompt user to allow location tracking.
- Location which is passed in YMAAdRequest overrides location which is collected automatically.
- Automatic location tracking is enabled by default.
- 
- @param enabled NO to disable automatic location tracking; otherwise location is tracked automatically.
+/**
+ The SDK automatically collects location data if the user allowed the app to track the location.
+ This option is enabled by default.
+ @param enabled Enables or disables collecting location data.
  */
 + (void)setLocationTrackingEnabled:(BOOL)enabled;
 
-/** Enable/disable ad visibility validation error indicator.
- Indicator is enabled for simulator by default. Pass YMADeviceTypeNone to disable indicator for all devices.
- Indicator is not displayed in apps installed from AppStore regardless of passed device type.
- 
- @param deviceType Device type for showing ad visibility validation error indicator.
+/** 
+ Enables/disables the incorrect integration indicator for native advertising.
+ @discussion By default, the indicator of incorrect integration (for native ads) is enabled
+ for the `YMADeviceTypeSimulator` device type (the types are listed in YMADeviceTypes).
+ To disable the indicator, pass the `YMADeviceTypeNone` value.
+ @warning The indicator is not displayed in apps installed from the AppStore,
+ regardless of the `deviceType` parameter value.
+ @param deviceType The type of a device for displaying the incorrect integration indicator.
  */
 + (void)enableVisibilityErrorIndicatorForDeviceType:(YMADeviceType)deviceType;
+
+/**
+ Set a value indicating whether user from GDPR region allowed to collect personal data
+ which is used for analytics and ad targeting.
+ If the value is set to `NO` personal data will not be collected. The default value is `NO`.
+
+ @param consent `YES` if user provided consent to collect personal data, otherwise `NO`.
+ */
++ (void)setUserConsent:(BOOL)consent;
 
 @end

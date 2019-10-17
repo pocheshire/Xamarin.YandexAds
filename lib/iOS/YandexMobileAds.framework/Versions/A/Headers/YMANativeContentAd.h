@@ -1,5 +1,5 @@
 /*
- * Version for iOS © 2015–2018 YANDEX
+ * Version for iOS © 2015–2019 YANDEX
  *
  * You may not use this file except in compliance with the License.
  * You may obtain a copy of the License at https://yandex.com/legal/mobileads_sdk_agreement/
@@ -14,20 +14,17 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /**
- * YMANativeContentAd allows to bind content ad to view. 
- * @see YMANativeGenericAd.h for generic ad methods.
+ Binds ad data with an object of the YMANativeContentAdView class.
  */
 @protocol YMANativeContentAd <YMANativeGenericAd>
 
 /**
- * Sets values of all content ad assets to native content ad view, installs impression and click handlers.
- *
- * @param view Root ad view, superview for all asset views.
- * @param delegate Ad delegate, which provides view controller for presenting modal content and handles ad events.
- * Passed delegate overwrites ad @p delegate property value. 
- * @param error Binding error. @see YMANativeAdErrors.h for error codes.
- *
- * @return YES if binding succeeded, otherwise NO.
+ Binds ad data with an object of the YMANativeContentAdView class.
+ @param view `View` with ad assets.
+ @param delegate The object implements the YMANativeAdDelegate protocol
+ that sends notifications of the user's interaction with the ad.
+ @param error Information about the error (for details, see YMANativeErrorCode).
+ @return The result of binding ad data with an object of the YMANativeContentAdView class.
  */
 - (BOOL)bindContentAdToView:(YMANativeContentAdView *)view
                    delegate:(nullable id<YMANativeAdDelegate>)delegate

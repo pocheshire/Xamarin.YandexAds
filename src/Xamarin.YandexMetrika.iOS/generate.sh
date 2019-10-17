@@ -1,0 +1,1 @@
+sharpie bind -framework ./../../lib/iOS/YandexMobileMetrica.framework -sdk iphoneos12.4

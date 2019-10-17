@@ -7,11 +7,6 @@ using UIKit;
 
 namespace Xamarin.YandexAds.iOS
 {
-    interface IYMANativeGenericAd { }
-    interface IYMANativeContentAd { }
-    interface IYMANativeAppInstallAd { }
-    interface IYMANativeImageAd { }
-
     // @interface YMAIcon : NSObject
     [BaseType(typeof(NSObject))]
     interface YMAIcon
@@ -191,9 +186,13 @@ namespace Xamarin.YandexAds.iOS
         [NullAllowed, Export("iconImageView", ArgumentSemantic.Weak)]
         UIImageView IconImageView { get; set; }
 
-        // @property (nonatomic, weak) UIImageView * _Nullable imageView __attribute__((iboutlet));
+        // @property (nonatomic, weak) UIImageView * _Nullable imageView __attribute__((iboutlet)) __attribute__((deprecated("Use mediaView instead")));
         [NullAllowed, Export("imageView", ArgumentSemantic.Weak)]
         UIImageView ImageView { get; set; }
+
+        // @property (nonatomic, weak) YMANativeMediaView * _Nullable mediaView __attribute__((iboutlet));
+        [NullAllowed, Export("mediaView", ArgumentSemantic.Weak)]
+        YMANativeMediaView MediaView { get; set; }
 
         // @property (nonatomic, weak) UILabel * _Nullable priceLabel __attribute__((iboutlet));
         [NullAllowed, Export("priceLabel", ArgumentSemantic.Weak)]
@@ -280,6 +279,34 @@ namespace Xamarin.YandexAds.iOS
         void DidFailLoadingWithError(YMANativeAdLoader loader, NSError error);
     }
 
+    partial interface Constants
+    {
+        // extern NSString *const kYMANativeAdTypeContent;
+        [Field("kYMANativeAdTypeContent", "__Internal")]
+        NSString kYMANativeAdTypeContent { get; }
+
+        // extern NSString *const kYMANativeAdTypeAppInstall;
+        [Field("kYMANativeAdTypeAppInstall", "__Internal")]
+        NSString kYMANativeAdTypeAppInstall { get; }
+
+        // extern NSString *const kYMANativeAdTypeImage;
+        [Field("kYMANativeAdTypeImage", "__Internal")]
+        NSString kYMANativeAdTypeImage { get; }
+    }
+
+    // @interface YMAVideoController : NSObject
+    [BaseType(typeof(NSObject))]
+    interface YMAVideoController
+    {
+        [Wrap("WeakDelegate")]
+        [NullAllowed]
+        YMAVideoDelegate Delegate { get; set; }
+
+        // @property (nonatomic, weak) id<YMAVideoDelegate> _Nullable delegate;
+        [NullAllowed, Export("delegate", ArgumentSemantic.Weak)]
+        NSObject WeakDelegate { get; set; }
+    }
+
     // @protocol YMARating <NSObject>
     [Protocol, Model]
     [BaseType(typeof(NSObject))]
@@ -290,6 +317,60 @@ namespace Xamarin.YandexAds.iOS
         [Abstract]
         [NullAllowed, Export("rating")]
         NSNumber Rating { get; set; }
+    }
+
+    // @interface YMAVASTRequestConfiguration : NSObject <NSCopying, NSMutableCopying>
+    [BaseType(typeof(NSObject))]
+    [DisableDefaultCtor]
+    interface YMAVASTRequestConfiguration : INSCopying, INSMutableCopying
+    {
+        // @property (readonly, nonatomic, strong) YMAVMAPAdBreak * _Nonnull adBreak;
+        [Export("adBreak", ArgumentSemantic.Strong)]
+        YMAVMAPAdBreak AdBreak { get; }
+
+        // @property (readonly, copy, nonatomic) NSDictionary * _Nullable parameters;
+        [NullAllowed, Export("parameters", ArgumentSemantic.Copy)]
+        NSDictionary Parameters { get; }
+
+        // -(instancetype _Nonnull)initWithAdBreak:(YMAVMAPAdBreak * _Nonnull)adBreak;
+        [Export("initWithAdBreak:")]
+        IntPtr Constructor(YMAVMAPAdBreak adBreak);
+    }
+
+    // @interface YMAMutableVASTRequestConfiguration : YMAVASTRequestConfiguration
+    [BaseType(typeof(YMAVASTRequestConfiguration))]
+    interface YMAMutableVASTRequestConfiguration
+    {
+        // @property (copy, nonatomic) NSDictionary * _Nullable parameters;
+        [NullAllowed, Export("parameters", ArgumentSemantic.Copy)]
+        NSDictionary Parameters { get; set; }
+    }
+
+    // @interface YMANativeAdMedia : NSObject
+    [BaseType(typeof(NSObject))]
+    interface YMANativeAdMedia
+    {
+        // @property (readonly, assign, nonatomic) CGFloat aspectRatio;
+        [Export("aspectRatio")]
+        nfloat AspectRatio { get; }
+    }
+
+    // @interface YMAVMAP : NSObject
+    [BaseType(typeof(NSObject))]
+    [DisableDefaultCtor]
+    interface YMAVMAP
+    {
+        // @property (readonly, copy, nonatomic) NSString * _Nonnull version;
+        [Export("version")]
+        string Version { get; }
+
+        // @property (readonly, copy, nonatomic) NSArray<YMAVMAPAdBreak *> * _Nonnull adBreaks;
+        [Export("adBreaks", ArgumentSemantic.Copy)]
+        YMAVMAPAdBreak[] AdBreaks { get; }
+
+        // @property (readonly, copy, nonatomic) NSArray<YMAVMAPExtension *> * _Nonnull extensions;
+        [Export("extensions", ArgumentSemantic.Copy)]
+        YMAVMAPExtension[] Extensions { get; }
     }
 
     // @interface YMAMediaFile : NSObject
@@ -325,6 +406,20 @@ namespace Xamarin.YandexAds.iOS
         int BitRate { get; }
     }
 
+    // @interface YMAVMAPExtension : NSObject
+    [BaseType(typeof(NSObject))]
+    [DisableDefaultCtor]
+    interface YMAVMAPExtension
+    {
+        // @property (readonly, copy, nonatomic) NSString * _Nonnull type;
+        [Export("type")]
+        string Type { get; }
+
+        // @property (readonly, copy, nonatomic) NSString * _Nonnull value;
+        [Export("value")]
+        string Value { get; }
+    }
+
     // @interface YMANativeImageAdView : UIView
     [BaseType(typeof(UIView))]
     interface YMANativeImageAdView
@@ -333,13 +428,47 @@ namespace Xamarin.YandexAds.iOS
         [NullAllowed, Export("feedbackButton", ArgumentSemantic.Weak)]
         UIButton FeedbackButton { get; set; }
 
-        // @property (nonatomic, weak) UIImageView * _Nullable imageView __attribute__((iboutlet));
+        // @property (nonatomic, weak) UIImageView * _Nullable imageView __attribute__((iboutlet)) __attribute__((deprecated("Use mediaView instead")));
         [NullAllowed, Export("imageView", ArgumentSemantic.Weak)]
         UIImageView ImageView { get; set; }
+
+        // @property (nonatomic, weak) YMANativeMediaView * _Nullable mediaView __attribute__((iboutlet));
+        [NullAllowed, Export("mediaView", ArgumentSemantic.Weak)]
+        YMANativeMediaView MediaView { get; set; }
 
         // @property (readonly, nonatomic, strong) id<YMANativeImageAd> _Nullable ad;
         [NullAllowed, Export("ad", ArgumentSemantic.Strong)]
         YMANativeImageAd Ad { get; }
+    }
+
+    // @interface YMAVMAPAdBreak : NSObject
+    [BaseType(typeof(NSObject))]
+    [DisableDefaultCtor]
+    interface YMAVMAPAdBreak
+    {
+        // @property (readonly, nonatomic, strong) YMAVMAPAdSource * _Nonnull adSource;
+        [Export("adSource", ArgumentSemantic.Strong)]
+        YMAVMAPAdSource AdSource { get; }
+
+        // @property (readonly, copy, nonatomic) NSString * _Nullable breakID;
+        [NullAllowed, Export("breakID")]
+        string BreakID { get; }
+
+        // @property (readonly, nonatomic, strong) NSArray<NSString *> * _Nonnull breakTypes;
+        [Export("breakTypes", ArgumentSemantic.Strong)]
+        string[] BreakTypes { get; }
+
+        // @property (readonly, nonatomic, strong) NSNumber * _Nullable repeatAfterMillis;
+        [NullAllowed, Export("repeatAfterMillis", ArgumentSemantic.Strong)]
+        NSNumber RepeatAfterMillis { get; }
+
+        // @property (readonly, nonatomic, strong) YMAVMAPTimeOffset * _Nonnull timeOffset;
+        [Export("timeOffset", ArgumentSemantic.Strong)]
+        YMAVMAPTimeOffset TimeOffset { get; }
+
+        // @property (readonly, copy, nonatomic) NSArray<YMAVMAPExtension *> * _Nonnull extensions;
+        [Export("extensions", ArgumentSemantic.Copy)]
+        YMAVMAPExtension[] Extensions { get; }
     }
 
     // @interface YMANativeAdLoaderConfiguration : NSObject
@@ -409,6 +538,32 @@ namespace Xamarin.YandexAds.iOS
         nfloat HeightWithAd(YMANativeGenericAd ad, nfloat width, [NullAllowed] YMANativeTemplateAppearance appearance);
     }
 
+    [Static]
+    partial interface Constants
+    {
+        // extern NSString *const kYMAVMAPErrorDomain;
+        [Field("kYMAVMAPErrorDomain", "__Internal")]
+        NSString kYMAVMAPErrorDomain { get; }
+    }
+
+    // @interface YMAVMAPAdSource : NSObject
+    [BaseType(typeof(NSObject))]
+    [DisableDefaultCtor]
+    interface YMAVMAPAdSource
+    {
+        // @property (readonly, nonatomic, strong) NSNumber * _Nullable allowMultipleAds;
+        [NullAllowed, Export("allowMultipleAds", ArgumentSemantic.Strong)]
+        NSNumber AllowMultipleAds { get; }
+
+        // @property (readonly, copy, nonatomic) NSString * _Nullable ID;
+        [NullAllowed, Export("ID")]
+        string ID { get; }
+
+        // @property (readonly, nonatomic, strong) NSNumber * _Nullable followRedirects;
+        [NullAllowed, Export("followRedirects", ArgumentSemantic.Strong)]
+        NSNumber FollowRedirects { get; }
+    }
+
     // @interface YMAYandexVASTAds : NSObject
     [BaseType(typeof(NSObject))]
     interface YMAYandexVASTAds
@@ -429,8 +584,8 @@ namespace Xamarin.YandexAds.iOS
     }
 
     // @protocol YMABlocksInfoLoaderDelegate
+    [Protocol, Model]
     [BaseType(typeof(NSObject))]
-    [Model]
     interface YMABlocksInfoLoaderDelegate
     {
         // @required -(void)loaderDidLoadBlocksInfo:(YMABlocksInfo *)blocksInfo;
@@ -452,7 +607,7 @@ namespace Xamarin.YandexAds.iOS
         // @required -(void)loaderDidLoadVideoAds:(NSArray *)ads;
         [Abstract]
         [Export("loaderDidLoadVideoAds:")]
-        void LoaderDidLoadVideoAds(YMABlocksInfo []ads);
+        void LoaderDidLoadVideoAds(YMAVASTAd []ads);
 
         // @required -(void)loaderDidFailLoadingVideoAdsWithError:(NSError *)error;
         [Abstract]
@@ -739,7 +894,6 @@ namespace Xamarin.YandexAds.iOS
         string ExtendedParameters { get; set; }
     }
 
-    [Static]
     partial interface Constants
     {
         // extern NSString *const kYMAAdsErrorDomain;
@@ -752,6 +906,131 @@ namespace Xamarin.YandexAds.iOS
         // extern NSString *const kYMAVASTErrorDomain;
         [Field("kYMAVASTErrorDomain", "__Internal")]
         NSString kYMAVASTErrorDomain { get; }
+    }
+
+    partial interface Constants
+    {
+        // extern NSString *const _Nonnull kYMABreakIDInpage;
+        [Field("kYMABreakIDInpage", "__Internal")]
+        NSString kYMABreakIDInpage { get; }
+
+        // extern NSString *const _Nonnull kYMABreakIDMidRoll;
+        [Field("kYMABreakIDMidRoll", "__Internal")]
+        NSString kYMABreakIDMidRoll { get; }
+
+        // extern NSString *const _Nonnull kYMABreakIDPauseRoll;
+        [Field("kYMABreakIDPauseRoll", "__Internal")]
+        NSString kYMABreakIDPauseRoll { get; }
+
+        // extern NSString *const _Nonnull kYMABreakIDPostRoll;
+        [Field("kYMABreakIDPostRoll", "__Internal")]
+        NSString kYMABreakIDPostRoll { get; }
+
+        // extern NSString *const _Nonnull kYMABreakIDPreRoll;
+        [Field("kYMABreakIDPreRoll", "__Internal")]
+        NSString kYMABreakIDPreRoll { get; }
+    }
+
+    partial interface Constants
+    {
+        // extern NSString *const _Nonnull kYMABreakTypeLinear;
+        [Field("kYMABreakTypeLinear", "__Internal")]
+        NSString kYMABreakTypeLinear { get; }
+
+        // extern NSString *const _Nonnull kYMABreakTypeNonLinear;
+        [Field("kYMABreakTypeNonLinear", "__Internal")]
+        NSString kYMABreakTypeNonLinear { get; }
+
+        // extern NSString *const _Nonnull kYMABreakTypeDisplay;
+        [Field("kYMABreakTypeDisplay", "__Internal")]
+        NSString kYMABreakTypeDisplay { get; }
+    }
+
+    // @interface YMAVMAPTimeOffset : NSObject
+    [BaseType(typeof(NSObject))]
+    [DisableDefaultCtor]
+    interface YMAVMAPTimeOffset
+    {
+        // @property (readonly, copy, nonatomic) NSString * rawValue;
+        [Export("rawValue")]
+        string RawValue { get; }
+    }
+
+    // @interface YMAVMAPRequestConfiguration : NSObject <NSCopying, NSMutableCopying>
+    [BaseType(typeof(NSObject))]
+    [DisableDefaultCtor]
+    interface YMAVMAPRequestConfiguration : INSCopying, INSMutableCopying
+    {
+        // @property (readonly, copy, nonatomic) NSString * _Nonnull pageID;
+        [Export("pageID")]
+        string PageID { get; }
+
+        // @property (readonly, copy, nonatomic) NSString * _Nonnull categoryID;
+        [Export("categoryID")]
+        string CategoryID { get; }
+
+        // -(instancetype _Nonnull)initWithPageID:(NSString * _Nonnull)pageID;
+        [Export("initWithPageID:")]
+        IntPtr Constructor(string pageID);
+    }
+
+    // @interface YMAMutableVMAPRequestConfiguration : YMAVMAPRequestConfiguration
+    [BaseType(typeof(YMAVMAPRequestConfiguration))]
+    interface YMAMutableVMAPRequestConfiguration
+    {
+        // @property (copy, nonatomic) NSString * _Nullable categoryID;
+        [NullAllowed, Export("categoryID")]
+        string CategoryID { get; set; }
+    }
+
+    // @interface YMAVMAPLoader : NSObject
+    [BaseType(typeof(NSObject))]
+    interface YMAVMAPLoader
+    {
+        [Wrap("WeakDelegate")]
+        [NullAllowed]
+        YMAVMAPLoaderDelegate Delegate { get; set; }
+
+        // @property (nonatomic, weak) id<YMAVMAPLoaderDelegate> _Nullable delegate;
+        [NullAllowed, Export("delegate", ArgumentSemantic.Weak)]
+        NSObject WeakDelegate { get; set; }
+
+        // -(void)loadVMAPWithRequestConfiguration:(YMAVMAPRequestConfiguration * _Nonnull)requestConfiguration;
+        [Export("loadVMAPWithRequestConfiguration:")]
+        void LoadVMAPWithRequestConfiguration(YMAVMAPRequestConfiguration requestConfiguration);
+    }
+
+    // @protocol YMAVMAPLoaderDelegate <NSObject>
+    [Protocol, Model]
+    [BaseType(typeof(NSObject))]
+    interface YMAVMAPLoaderDelegate
+    {
+        // @required -(void)loader:(YMAVMAPLoader * _Nonnull)loader didLoadVMAP:(YMAVMAP * _Nonnull)VMAP;
+        [Abstract]
+        [Export("loader:didLoadVMAP:")]
+        void DidLoadVMAP(YMAVMAPLoader loader, YMAVMAP VMAP);
+
+        // @required -(void)loader:(YMAVMAPLoader * _Nonnull)loader didFailLoadingVMAPWithError:(NSError * _Nonnull)error;
+        [Abstract]
+        [Export("loader:didFailLoadingVMAPWithError:")]
+        void DidFailLoadingVMAPWithError(YMAVMAPLoader loader, NSError error);
+    }
+
+    // @interface YMAVideoAdLoader : NSObject
+    [BaseType(typeof(NSObject))]
+    interface YMAVideoAdLoader
+    {
+        [Wrap("WeakDelegate")]
+        [NullAllowed]
+        YMAVideoAdLoaderDelegate Delegate { get; set; }
+
+        // @property (nonatomic, weak) id<YMAVideoAdLoaderDelegate> _Nullable delegate;
+        [NullAllowed, Export("delegate", ArgumentSemantic.Weak)]
+        NSObject WeakDelegate { get; set; }
+
+        // -(void)loadVASTWithRequestConfiguration:(YMAVASTRequestConfiguration * _Nonnull)requestConfiguration;
+        [Export("loadVASTWithRequestConfiguration:")]
+        void LoadVASTWithRequestConfiguration(YMAVASTRequestConfiguration requestConfiguration);
     }
 
     // @interface YMANativeContentAdView : UIView
@@ -782,9 +1061,13 @@ namespace Xamarin.YandexAds.iOS
         [NullAllowed, Export("iconImageView", ArgumentSemantic.Weak)]
         UIImageView IconImageView { get; set; }
 
-        // @property (nonatomic, weak) UIImageView * _Nullable imageView __attribute__((iboutlet));
+        // @property (nonatomic, weak) UIImageView * _Nullable imageView __attribute__((iboutlet)) __attribute__((deprecated("Use mediaView instead")));
         [NullAllowed, Export("imageView", ArgumentSemantic.Weak)]
         UIImageView ImageView { get; set; }
+
+        // @property (nonatomic, weak) YMANativeMediaView * _Nullable mediaView __attribute__((iboutlet));
+        [NullAllowed, Export("mediaView", ArgumentSemantic.Weak)]
+        YMANativeMediaView MediaView { get; set; }
 
         // @property (nonatomic, weak) UILabel * _Nullable sponsoredLabel __attribute__((iboutlet));
         [NullAllowed, Export("sponsoredLabel", ArgumentSemantic.Weak)]
@@ -848,6 +1131,22 @@ namespace Xamarin.YandexAds.iOS
         void LoadImages();
     }
 
+    // @protocol YMAReward <NSObject>
+    [Protocol, Model]
+    [BaseType(typeof(NSObject))]
+    interface YMAReward
+    {
+        // @required @property (readonly, assign, nonatomic) NSInteger amount;
+        [Abstract]
+        [Export("amount")]
+        nint Amount { get; }
+
+        // @required @property (readonly, copy, nonatomic) NSString * _Nonnull type;
+        [Abstract]
+        [Export("type")]
+        string Type { get; }
+    }
+
     // @interface YMAAdView : UIView
     [BaseType(typeof(UIView))]
     interface YMAAdView
@@ -862,6 +1161,10 @@ namespace Xamarin.YandexAds.iOS
         // @property (readonly, copy, nonatomic) NSString * blockID;
         [Export("blockID")]
         string BlockID { get; }
+
+        // @property (readonly, nonatomic, strong) YMAVideoController * videoController;
+        [Export("videoController", ArgumentSemantic.Strong)]
+        YMAVideoController VideoController { get; }
 
         // -(instancetype)initWithBlockID:(NSString *)blockID adSize:(YMAAdSize *)adSize delegate:(id<YMAAdViewDelegate>)delegate;
         [Export("initWithBlockID:adSize:delegate:")]
@@ -948,18 +1251,6 @@ namespace Xamarin.YandexAds.iOS
     [BaseType(typeof(NSObject))]
     interface YMAMobileAds
     {
-        // extern NSString *const kYMANativeAdTypeContent;
-        [Field("kYMANativeAdTypeContent", "__Internal")]
-        NSString kYMANativeAdTypeContent { get; }
-
-        // extern NSString *const kYMANativeAdTypeAppInstall;
-        [Field("kYMANativeAdTypeAppInstall", "__Internal")]
-        NSString kYMANativeAdTypeAppInstall { get; }
-
-        // extern NSString *const kYMANativeAdTypeImage;
-        [Field("kYMANativeAdTypeImage", "__Internal")]
-        NSString kYMANativeAdTypeImage { get; }
-
         // +(void)enableLogging;
         [Static]
         [Export("enableLogging")]
@@ -979,6 +1270,11 @@ namespace Xamarin.YandexAds.iOS
         [Static]
         [Export("enableVisibilityErrorIndicatorForDeviceType:")]
         void EnableVisibilityErrorIndicatorForDeviceType(YMADeviceType deviceType);
+
+        // +(void)setUserConsent:(BOOL)consent;
+        [Static]
+        [Export("setUserConsent:")]
+        void SetUserConsent(bool consent);
     }
 
     // @interface YMAAdSize : NSObject
@@ -1199,6 +1495,104 @@ namespace Xamarin.YandexAds.iOS
         void InterstitialWillPresentScreen(UIViewController webBrowser);
     }
 
+    // @interface YMARewardedAd : NSObject
+    [BaseType(typeof(NSObject))]
+    interface YMARewardedAd
+    {
+        // @property (readonly, copy, nonatomic) NSString * blockID;
+        [Export("blockID")]
+        string BlockID { get; }
+
+        // @property (readonly, assign, nonatomic) BOOL loaded;
+        [Export("loaded")]
+        bool Loaded { get; }
+
+        [Wrap("WeakDelegate")]
+        YMARewardedAdDelegate Delegate { get; set; }
+
+        // @property (nonatomic, weak) id<YMARewardedAdDelegate> delegate;
+        [NullAllowed, Export("delegate", ArgumentSemantic.Weak)]
+        NSObject WeakDelegate { get; set; }
+
+        // @property (assign, nonatomic) BOOL shouldOpenLinksInApp;
+        [Export("shouldOpenLinksInApp")]
+        bool ShouldOpenLinksInApp { get; set; }
+
+        // @property (readonly, assign, nonatomic) BOOL hasBeenPresented;
+        [Export("hasBeenPresented")]
+        bool HasBeenPresented { get; }
+
+        // @property (copy, nonatomic) NSString * userID;
+        [Export("userID")]
+        string UserID { get; set; }
+
+        // -(instancetype)initWithBlockID:(NSString *)blockID;
+        [Export("initWithBlockID:")]
+        IntPtr Constructor(string blockID);
+
+        // -(void)load;
+        [Export("load")]
+        void Load();
+
+        // -(void)loadWithRequest:(YMAAdRequest *)request;
+        [Export("loadWithRequest:")]
+        void LoadWithRequest(YMAAdRequest request);
+
+        // -(void)presentFromViewController:(UIViewController *)viewController;
+        [Export("presentFromViewController:")]
+        void PresentFromViewController(UIViewController viewController);
+
+        // -(void)presentFromViewController:(UIViewController *)viewController dismissalBlock:(void (^)(void))dismissalBlock;
+        [Export("presentFromViewController:dismissalBlock:")]
+        void PresentFromViewController(UIViewController viewController, Action dismissalBlock);
+    }
+
+    // @protocol YMARewardedAdDelegate <NSObject>
+    [Protocol, Model]
+    [BaseType(typeof(NSObject))]
+    interface YMARewardedAdDelegate
+    {
+        // @optional -(void)rewardedAd:(YMARewardedAd *)rewardedAd didReward:(id<YMAReward>)reward;
+        [Export("rewardedAd:didReward:")]
+        void RewardedAd(YMARewardedAd rewardedAd, YMAReward reward);
+
+        // @optional -(void)rewardedAdDidLoadAd:(YMARewardedAd *)rewardedAd;
+        [Export("rewardedAdDidLoadAd:")]
+        void RewardedAdDidLoadAd(YMARewardedAd rewardedAd);
+
+        // @optional -(void)rewardedAdDidFailToLoadAd:(YMARewardedAd *)rewardedAd error:(NSError *)error;
+        [Export("rewardedAdDidFailToLoadAd:error:")]
+        void RewardedAdDidFailToLoadAd(YMARewardedAd rewardedAd, NSError error);
+
+        // @optional -(void)rewardedAdWillLeaveApplication:(YMARewardedAd *)rewardedAd;
+        [Export("rewardedAdWillLeaveApplication:")]
+        void RewardedAdWillLeaveApplication(YMARewardedAd rewardedAd);
+
+        // @optional -(void)rewardedAdDidFailToPresentAd:(YMARewardedAd *)rewardedAd error:(NSError *)error;
+        [Export("rewardedAdDidFailToPresentAd:error:")]
+        void RewardedAdDidFailToPresentAd(YMARewardedAd rewardedAd, NSError error);
+
+        // @optional -(void)rewardedAdWillAppear:(YMARewardedAd *)rewardedAd;
+        [Export("rewardedAdWillAppear:")]
+        void RewardedAdWillAppear(YMARewardedAd rewardedAd);
+
+        // @optional -(void)rewardedAdDidAppear:(YMARewardedAd *)rewardedAd;
+        [Export("rewardedAdDidAppear:")]
+        void RewardedAdDidAppear(YMARewardedAd rewardedAd);
+
+        // @optional -(void)rewardedAdWillDisappear:(YMARewardedAd *)rewardedAd;
+        [Export("rewardedAdWillDisappear:")]
+        void RewardedAdWillDisappear(YMARewardedAd rewardedAd);
+
+        // @optional -(void)rewardedAdDidDisappear:(YMARewardedAd *)rewardedAd;
+        [Export("rewardedAdDidDisappear:")]
+        void RewardedAdDidDisappear(YMARewardedAd rewardedAd);
+
+        // @optional -(void)rewardedAd:(YMARewardedAd *)rewardedAd willPresentScreen:(UIViewController *)viewController;
+        [Export("rewardedAd:willPresentScreen:")]
+        void RewardedAd(YMARewardedAd rewardedAd, UIViewController viewController);
+    }
+
     // @interface YMALog : NSObject
     [BaseType(typeof(NSObject))]
     interface YMALog
@@ -1207,6 +1601,16 @@ namespace Xamarin.YandexAds.iOS
         [Static]
         [Export("enableLogging")]
         void EnableLogging();
+    }
+
+    // @protocol YMAVideoDelegate <NSObject>
+    [Protocol, Model]
+    [BaseType(typeof(NSObject))]
+    interface YMAVideoDelegate
+    {
+        // @optional -(void)videoControllerDidFinishPlayingVideo:(YMAVideoController * _Nonnull)videoController;
+        [Export("videoControllerDidFinishPlayingVideo:")]
+        void VideoControllerDidFinishPlayingVideo(YMAVideoController videoController);
     }
 
     // @protocol YMANativeContentAd <YMANativeGenericAd>
@@ -1242,15 +1646,15 @@ namespace Xamarin.YandexAds.iOS
 
         // @optional -(void)nativeAdWillLeaveApplication:(id _Null_unspecified)ad;
         [Export("nativeAdWillLeaveApplication:")]
-        void WillLeaveApplication(NSObject ad);
+        void NativeAdWillLeaveApplication(NSObject ad);
 
         // @optional -(void)nativeAd:(id _Null_unspecified)ad willPresentScreen:(UIViewController * _Nullable)viewController;
         [Export("nativeAd:willPresentScreen:")]
-        void WillPresentScreen(NSObject ad, [NullAllowed] UIViewController viewController);
+        void NativeAdWillPresentScreen(NSObject ad, [NullAllowed] UIViewController viewController);
 
         // @optional -(void)nativeAd:(id _Null_unspecified)ad didDismissScreen:(UIViewController * _Nullable)viewController;
         [Export("nativeAd:didDismissScreen:")]
-        void DidDismissScreen(NSObject ad, [NullAllowed] UIViewController viewController);
+        void NativeAdDidDismissScreen(NSObject ad, [NullAllowed] UIViewController viewController);
 
         // @optional -(void)closeNativeAd:(id _Null_unspecified)ad;
         [Export("closeNativeAd:")]
@@ -1648,6 +2052,10 @@ namespace Xamarin.YandexAds.iOS
         [NullAllowed, Export("image", ArgumentSemantic.Strong)]
         YMANativeAdImage Image { get; set; }
 
+        // @property (nonatomic, strong) YMANativeAdMedia * _Nullable media;
+        [NullAllowed, Export("media", ArgumentSemantic.Strong)]
+        YMANativeAdMedia Media { get; set; }
+
         // @property (copy, nonatomic) NSString * _Nullable price;
         [NullAllowed, Export("price")]
         string Price { get; set; }
@@ -1671,5 +2079,11 @@ namespace Xamarin.YandexAds.iOS
         // @property (copy, nonatomic) NSString * _Nullable warning;
         [NullAllowed, Export("warning")]
         string Warning { get; set; }
+    }
+
+    // @interface YMANativeMediaView : UIView
+    [BaseType(typeof(UIView))]
+    interface YMANativeMediaView
+    {
     }
 }

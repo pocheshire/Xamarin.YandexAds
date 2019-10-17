@@ -1,5 +1,5 @@
 /*
- * Version for iOS © 2015–2018 YANDEX
+ * Version for iOS © 2015–2019 YANDEX
  *
  * You may not use this file except in compliance with the License.
  * You may obtain a copy of the License at https://yandex.com/legal/mobileads_sdk_agreement/
@@ -8,22 +8,19 @@
 #import <Foundation/Foundation.h>
 
 /**
- * YMARating protocol allows ad to set rating value to arbitrary view.
+ The protocol sets and receives the rating value.
  */
-
 @protocol YMARating <NSObject>
 
 /**
- * Sets rating value.
- *
- * @param rating Rating represented by double value in interval from 0 to 5.
+ Sets the rating value in the range [0; 5].
+ @param rating The rating value in the range [0; 5].
  */
 - (void)setRating:(nullable NSNumber *)rating;
 
 /**
- * Returns rating.
- *
- * @return Rating represented by double value in interval from 0 to 5.
+ Returns the rating value in the range [0; 5].
+ @return Rating value.
  */
 - (nullable NSNumber *)rating;
 

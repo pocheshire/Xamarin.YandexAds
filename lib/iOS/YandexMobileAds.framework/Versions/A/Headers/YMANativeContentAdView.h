@@ -1,5 +1,5 @@
 /*
- * Version for iOS © 2015–2018 YANDEX
+ * Version for iOS © 2015–2019 YANDEX
  *
  * You may not use this file except in compliance with the License.
  * You may obtain a copy of the License at https://yandex.com/legal/mobileads_sdk_agreement/
@@ -8,19 +8,10 @@
 #import <UIKit/UIKit.h>
 
 @protocol YMANativeContentAd;
+@class YMANativeMediaView;
 
 /**
- * YMANativeContentAdView represents view for content ad type. It contains views for all of content ad assets.
- * Views for all of the required assets should be set,
- * although ad may not contain age restrictions, image or warning.
- * If any of the required views is not provided for ad which contains corresponding assets, binding fails.
- * Optional views may be provided to increase CTR.
- *
- * @discussion Typically, any ad has title, body and sponsored assets.
- * Ad may have age, warning and image. In case if ad has these assets, app has to display them.
- * Other assets are optional.
- *
- * YMANativeContentAd provided by loader should be used to set ad assets into view.
+ This class is responsible for creating the layout of a `Content` ad without using a template.
  */
 
 NS_ASSUME_NONNULL_BEGIN
@@ -28,58 +19,63 @@ NS_ASSUME_NONNULL_BEGIN
 @interface YMANativeContentAdView : UIView
 
 /**
- * Label for age restrictions, e.g. '18+'.
+ `UILabel` for information about age restrictions.
  */
 @property (nonatomic, weak) IBOutlet UILabel *ageLabel;
 
 /**
- * Label for ad body.
+ `UILabel` for the main ad text.
  */
 @property (nonatomic, weak) IBOutlet UILabel *bodyLabel;
 
 /**
- * Button for call to action.
+ `UIButton` for handling ad actions.
  */
 @property (nonatomic, weak, nullable) IBOutlet UIButton *callToActionButton;
 
 /**
- * Button for user feedback.
+ `UIButton` for handling reasons for ad closing.
  */
 @property (nonatomic, weak, nullable) IBOutlet UIButton *feedbackButton;
 
 /**
- * Label for advertiser domain.
+ `UILabel` for domain data.
  */
 @property (nonatomic, weak, nullable) IBOutlet UILabel *domainLabel;
 
 /**
- * ImageView for favicon.
+ `UIImageView` for the icon.
  */
 @property (nonatomic, weak, nullable) IBOutlet UIImageView *iconImageView;
 
 /**
- * ImageView for ad image.
+ `UIImageView` for the ad's main image.
+ @deprecated This property is deprecated. Use #mediaView instead.
  */
-@property (nonatomic, weak) IBOutlet UIImageView *imageView;
+@property (nonatomic, weak) IBOutlet UIImageView *imageView __attribute__((deprecated("Use mediaView instead")));
 
 /**
- * Label for sponsored by.
+ `YMANativeMediaView` for the ad's media.
+ */
+@property (nonatomic, weak, nullable) IBOutlet YMANativeMediaView *mediaView;
+
+/**
+ `UILabel` for data on the ad network.
  */
 @property (nonatomic, weak, nullable) IBOutlet UILabel *sponsoredLabel;
 
 /**
- * Label for ad title.
+ `UILabel` for the ad title.
  */
 @property (nonatomic, weak) IBOutlet UILabel *titleLabel;
 
 /**
- * Label for ad warning.
+ `UILabel` for the warning.
  */
 @property (nonatomic, weak) IBOutlet UILabel *warningLabel;
 
 /**
- * Ad, which is bound to view. Ad automatically sets this property during binding.
- * Ad stops all activities such as visibility monitoring when it is released.
+ The ad object.
  */
 @property (nonatomic, strong, readonly, nullable) id<YMANativeContentAd> ad;
 

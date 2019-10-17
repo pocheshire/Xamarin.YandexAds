@@ -1,5 +1,5 @@
 /*
- * Version for iOS © 2015–2018 YANDEX
+ * Version for iOS © 2015–2019 YANDEX
  *
  * You may not use this file except in compliance with the License.
  * You may obtain a copy of the License at https://yandex.com/legal/mobileads_sdk_agreement/
@@ -14,35 +14,27 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /**
- * YMANativeBannerView provides template for displaying native ads.
- * Banner appearance such as asset offsets, fonts, colors, sizes, etc.
- * may be confugured with @p applyAppearance: method.
- * YMANativeBannerView is optimized to be displayed in @p UITableView.
+ This class is a template for native advertising layout.
  */
 @interface YMANativeBannerView : UIView <YMANativeAdImageLoadingObserver>
 
 /**
- * Native ad.
+ Loaded ad.
  */
 @property (nonatomic, strong, nullable) id<YMANativeGenericAd> ad;
 
 /**
- * Configures banner appearance. Banner appearance is not changed if appearance is modified after this call.
- * Default appearance is used if @p applyAppearance: is not called.
- *
- * @param appearance Banner appearance.
+ Applies the appearance settings from the template.
+ @param appearance Appearance of the ad.
  */
 - (void)applyAppearance:(YMANativeTemplateAppearance *)appearance;
 
 /**
- * Calculates height of banner for particular ad, apperance and width.
- *
- * @param ad Native ad.
- * @param width Banner width.
- * @param appearance Banner appearance which is used as parameter in @p applyAppearance: method for banner.
- * Default appearance is used if @p appearance is nil.
- *
- * @return Banner height.
+ Calculates the height of the ad.
+ @param ad Loaded ad.
+ @param width The width of the ad.
+ @param appearance Appearance of the ad.
+ @return Returns the height of the ad.
  */
 + (CGFloat)heightWithAd:(id<YMANativeGenericAd>)ad
                   width:(CGFloat)width
