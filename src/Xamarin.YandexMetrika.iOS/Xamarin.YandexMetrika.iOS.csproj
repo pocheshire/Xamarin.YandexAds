@@ -47,7 +47,7 @@
       <Frameworks>SystemConfiguration Security UIKit Foundation CoreTelephony CoreLocation CoreGraphics AdSupport</Frameworks>
       <LinkerFlags>-ObjC -lz -lc++ -lsqlite3 </LinkerFlags>
       <ForceLoad>True</ForceLoad>
-      <WeakFrameworks>SafariServices</WeakFrameworks>
+      <WeakFrameworks>iAd</WeakFrameworks>
       <IsCxx>True</IsCxx>
     </NativeReference>
     <NativeReference Include="..\..\lib\iOS\YandexMobileMetricaCrashes.framework">
@@ -55,7 +55,7 @@
       <LinkerFlags>-ObjC -lz -lc++ -lsqlite3</LinkerFlags>
       <Frameworks>SystemConfiguration Security UIKit Foundation CoreTelephony CoreLocation CoreGraphics AdSupport</Frameworks>
       <ForceLoad>True</ForceLoad>
-      <WeakFrameworks>SafariServices</WeakFrameworks>
+      <WeakFrameworks>iAd</WeakFrameworks>
       <IsCxx>True</IsCxx>
     </NativeReference>
   </ItemGroup>

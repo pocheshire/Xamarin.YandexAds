@@ -5,6 +5,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.YandexAds.iOS", "Xa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.YandexMetrika.iOS", "Xamarin.YandexMetrika.iOS\Xamarin.YandexMetrika.iOS.csproj", "{1CA85B14-C58E-43F3-8D88-36C7D35BE9F8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.YandexMetrikaPush.iOS", "Xamarin.YandexMetrikaPush.iOS\Xamarin.YandexMetrikaPush.iOS.csproj", "{02DAFD9D-4778-45CF-BD43-A0F577F216D3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.YandexMetrikaPush.Android", "Xamarin.YandexMetrikaPush.Android\Xamarin.YandexMetrikaPush.Android.csproj", "{60E27828-2178-4BD0-B998-AA243BE84100}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,5 +23,13 @@ Global
 		{1CA85B14-C58E-43F3-8D88-36C7D35BE9F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1CA85B14-C58E-43F3-8D88-36C7D35BE9F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1CA85B14-C58E-43F3-8D88-36C7D35BE9F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02DAFD9D-4778-45CF-BD43-A0F577F216D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02DAFD9D-4778-45CF-BD43-A0F577F216D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02DAFD9D-4778-45CF-BD43-A0F577F216D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02DAFD9D-4778-45CF-BD43-A0F577F216D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60E27828-2178-4BD0-B998-AA243BE84100}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60E27828-2178-4BD0-B998-AA243BE84100}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60E27828-2178-4BD0-B998-AA243BE84100}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60E27828-2178-4BD0-B998-AA243BE84100}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
