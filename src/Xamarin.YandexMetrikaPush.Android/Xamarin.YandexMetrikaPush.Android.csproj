@@ -13,9 +13,8 @@
     <RootNamespace>Xamarin.YandexMetrikaPush.Android</RootNamespace>
     <AssemblyName>Xamarin.YandexMetrikaPush.Android</AssemblyName>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkVersion>v4.4</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v12.0</TargetFrameworkVersion>
     <AndroidClassParser>class-parse</AndroidClassParser>
-    <AndroidCodegenTarget>XAJavaInterop1</AndroidCodegenTarget>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -54,9 +53,24 @@
     <TransformFile Include="Transforms\EnumMethods.xml" />
   </ItemGroup>
   <ItemGroup>
-    <LibraryProjectZip Include="..\..\lib\Android\mobmetricapushlib-1.5.1.aar">
-      <Link>Jars\mobmetricapushlib-1.5.1.aar</Link>
+    <LibraryProjectZip Include="..\..\lib\Android\mobmetricapushlib-2.2.0.aar">
+      <Link>Jars\mobmetricapushlib-2.2.0.aar</Link>
     </LibraryProjectZip>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Xamarin.Kotlin.StdLib">
+      <Version>1.7.10</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Xamarin.YandexMetrikaPush.Core.Android\Xamarin.YandexMetrikaPush.Core.Android.csproj">
+      <Project>{B15EEE31-41E9-4CD9-BF91-86F36A1F1AED}</Project>
+      <Name>Xamarin.YandexMetrikaPush.Core.Android</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Xamarin.YandexMetrikaPush.Provider.Firebase.Android\Xamarin.YandexMetrikaPush.Provider.Firebase.Android.csproj">
+      <Project>{233AFBD0-93EA-4A0A-B50C-DD745397E631}</Project>
+      <Name>Xamarin.YandexMetrikaPush.Provider.Firebase.Android</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.Bindings.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
