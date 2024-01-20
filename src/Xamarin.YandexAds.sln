@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.YandexAds.iOS", "Xamarin.YandexAds.iOS\Xamarin.YandexAds.iOS.csproj", "{5BDD79EF-05A1-4650-B1E8-646DBDB05B5C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.YandexMetrika.iOS", "Xamarin.YandexMetrika.iOS\Xamarin.YandexMetrika.iOS.csproj", "{1CA85B14-C58E-43F3-8D88-36C7D35BE9F8}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.YandexMetrikaPush.iOS", "Xamarin.YandexMetrikaPush.iOS\Xamarin.YandexMetrikaPush.iOS.csproj", "{02DAFD9D-4778-45CF-BD43-A0F577F216D3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.YandexMetrikaPush.Android", "Xamarin.YandexMetrikaPush.Android\Xamarin.YandexMetrikaPush.Android.csproj", "{60E27828-2178-4BD0-B998-AA243BE84100}"
@@ -25,10 +23,6 @@ Global
 		{5BDD79EF-05A1-4650-B1E8-646DBDB05B5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5BDD79EF-05A1-4650-B1E8-646DBDB05B5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5BDD79EF-05A1-4650-B1E8-646DBDB05B5C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1CA85B14-C58E-43F3-8D88-36C7D35BE9F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1CA85B14-C58E-43F3-8D88-36C7D35BE9F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1CA85B14-C58E-43F3-8D88-36C7D35BE9F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1CA85B14-C58E-43F3-8D88-36C7D35BE9F8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{02DAFD9D-4778-45CF-BD43-A0F577F216D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{02DAFD9D-4778-45CF-BD43-A0F577F216D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{02DAFD9D-4778-45CF-BD43-A0F577F216D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
