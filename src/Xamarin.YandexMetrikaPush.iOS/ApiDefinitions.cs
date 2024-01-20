@@ -6,7 +6,7 @@ using UserNotifications;
 namespace Xamarin.YandexMetrikaPush.iOS
 {
     // @protocol YMPUserNotificationCenterDelegate <UNUserNotificationCenterDelegate>
-    [iOS(10, 0)]
+//    [iOS(10, 0)]
     [Protocol, Model]
     interface YMPUserNotificationCenterDelegate : IUNUserNotificationCenterDelegate
     {
@@ -28,7 +28,7 @@ namespace Xamarin.YandexMetrikaPush.iOS
     interface IYMPUserNotificationCenterDelegate {}
 
     // @protocol YMPUserNotificationCenterHandling <NSObject>
-    [iOS(10, 0)]
+//    [iOS(10, 0)]
     [Protocol, Model]
     [BaseType(typeof(NSObject))]
     interface YMPUserNotificationCenterHandling
@@ -44,7 +44,7 @@ namespace Xamarin.YandexMetrikaPush.iOS
         void UserNotificationCenterDidReceiveNotificationResponse(UNNotificationResponse response);
 
         // @required -(void)userNotificationCenterOpenSettingsForNotification:(UNNotification * _Nullable)notification __attribute__((availability(ios, introduced=12.0)));
-        [iOS(12, 0)]
+//        [iOS(12, 0)]
         [Abstract]
         [Export("userNotificationCenterOpenSettingsForNotification:")]
         void UserNotificationCenterOpenSettingsForNotification([NullAllowed] UNNotification notification);
@@ -55,19 +55,19 @@ namespace Xamarin.YandexMetrikaPush.iOS
     interface YMPYandexMetricaPush
     {
         // +(id<YMPUserNotificationCenterDelegate> _Nonnull)userNotificationCenterDelegate __attribute__((availability(ios, introduced=10.0)));
-        [iOS(10, 0)]
+//        [iOS(10, 0)]
         [Static]
         [Export("userNotificationCenterDelegate")]
         IYMPUserNotificationCenterDelegate UserNotificationCenterDelegate { get; }
 
         // +(id<YMPUserNotificationCenterHandling> _Nonnull)userNotificationCenterHandler __attribute__((availability(ios, introduced=10.0)));
-        [iOS(10, 0)]
+//        [iOS(10, 0)]
         [Static]
         [Export("userNotificationCenterHandler")]
         YMPUserNotificationCenterHandling UserNotificationCenterHandler { get; }
 
         // +(void)handleDidReceiveNotificationRequest:(UNNotificationRequest * _Nonnull)request __attribute__((availability(ios, introduced=10.0)));
-        [iOS(10, 0)]
+//        [iOS(10, 0)]
         [Static]
         [Export("handleDidReceiveNotificationRequest:")]
         void HandleDidReceiveNotificationRequest(UNNotificationRequest request);
